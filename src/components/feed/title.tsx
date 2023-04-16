@@ -8,7 +8,7 @@ export default function Title({ event }: { event: EventData }) {
       <div>
         <div className="relative px-1">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white">
-            <PencilIcon className="h-5 w-5 text-gray-500" aria-hidden="true" />
+            <PencilIcon className="h-4 w-4 text-gray-500" aria-hidden="true" />
           </div>
         </div>
       </div>

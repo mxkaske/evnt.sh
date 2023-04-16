@@ -24,18 +24,11 @@ export default async function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <h1 className="text-center text-3xl">Event Sourcing</h1>
-      <div className="grid grid-cols-4">
-        {/* Compine both together: current & change */}
-        <div>
-          <div>Current State</div>
-          <div>title: {state.title}</div>
-          <div>labels: {state.labels.join(", ")}</div>
-          <div>status: {state.status}</div>
-        </div>
+      <div className="grid grid-cols-3 gap-8">
         <div>
           <h1>Change State</h1>
           <TitleForm defaultValue={state.title || undefined} />
-          <LabelForm />
+          <LabelForm defaultValues={state.labels || undefined} />
           <StatusForm defaultValue={state.status || undefined} />
         </div>
         <div className="col-span-2">
@@ -43,13 +36,13 @@ export default async function Home() {
             <ul role="list" className="-mb-8">
               {events.map((event, i) => {
                 function renderEvent() {
-                  if (event.type === "add-label") {
+                  if (event.type.endsWith("-label")) {
                     return <Label key={event.timestamp} {...{ event }} />;
                   }
-                  if (event.type === "update-status") {
+                  if (event.type.endsWith("-status")) {
                     return <Status key={event.timestamp} {...{ event }} />;
                   }
-                  if (event.type === "update-title") {
+                  if (event.type.endsWith("-title")) {
                     return <Title key={event.timestamp} {...{ event }} />;
                   }
                 }

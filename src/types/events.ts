@@ -9,6 +9,7 @@ export type EventType = EventCreateType | EventUpdateType | EventDeleteType;
 
 export type EventData = {
   type: EventType;
+  // how to work with arrays?
   data: string; // TODO: move to typesafe [K in EventType]
   user: string; // TODO: extend to proper type
   timestamp: number;
