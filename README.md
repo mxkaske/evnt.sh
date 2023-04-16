@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Goal
 
-## Getting Started
+Create a feed for data changes. Best example is the GitHub Pull Request history.
 
-First, run the development server:
+Steps:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+1. Define events: "label added", "pull request created",...
+2. Implement event store: Capture and store events (kafka)
+3. Capture events: Record all relevant data for each event (metadata)
+4. Replay events: Recreate the state of the system at any point of time (IDEA: HoverCard with state for a given time + should be cached and have a TTL as it would not be used too often)
+5. Analyze and query events
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+API Routes:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `/events`: events from the event store
+  - POST: create new event
+  - GET: list of events
+  - `/:id`:
+    - GET: get specific event
+- `/replay`: replay events from event store
+  - GET: include a query param to specifiy timestamp of the state to be reproduced
+- `/commands`: trigger command in the system that is translated into an event that gets stored in the event store
+  - POST: create a command (e.g. "label added", "pull request created",..)
+- `/state`: store current state of the system
+  - GET: get current state
+  - PUT: update current state
 
-[http://localhost:3000/api/hello](http://localhost:3000/api/hello) is an endpoint that uses [Route Handlers](https://beta.nextjs.org/docs/routing/route-handlers). This endpoint can be edited in `app/api/hello/route.ts`.
+Typical flow to update data:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. Create new event (with all relevant data)
+2. Publish event to Kafka
+   > We will probably need QStash here to send trigger about new event
+3. Consume event from Kafka
+4. Update current state
 
-## Learn More
+Example
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Chess game where every move is stored as event. That way, you can replay the whole game.
