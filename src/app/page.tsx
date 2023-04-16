@@ -8,11 +8,16 @@ import { State } from "@/types/states";
 import TitleForm from "@/components/form/title";
 import Title from "@/components/feed/title";
 
+const URL =
+  process.env.NODE_ENV === "production"
+    ? process.env.VERCEL_URL
+    : "http://127.0.0.1:3000";
+
 export const revalidate = 0;
 
 export default async function Home() {
-  const eventsRes = await fetch("http://127.0.0.1:3000/api/v1/events");
-  const stateRes = await fetch("http://127.0.0.1:3000/api/v1/states");
+  const eventsRes = await fetch(`${URL}/api/v1/events`);
+  const stateRes = await fetch(`${URL}/api/v1/states`);
   const events = (await eventsRes.json()) as EventData[];
   const state = (await stateRes.json()) as State;
   console.log(state);
