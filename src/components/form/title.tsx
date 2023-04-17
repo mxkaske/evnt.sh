@@ -1,40 +1,46 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { Button } from "../ui/button";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { useState } from "react";
 
 interface TitleFormProps {
   defaultValue?: string;
 }
 
 export default function TitleForm({ defaultValue }: TitleFormProps) {
+  const [value, setValue] = useState(defaultValue);
   const router = useRouter();
+
+  const onClick = async () => {
+    await fetch("api/v1/events", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        type: "update-title",
+        data: value,
+        user: "Maximilian Kaske",
+      }),
+    });
+    router.refresh();
+  };
   return (
-    <form
-      onSubmit={async (e) => {
-        e.preventDefault();
-        const target = e.target as typeof e.target & {
-          title: { value: string };
-        };
-        await fetch("api/v1/events", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            type: "update-title",
-            data: target.title.value,
-            user: "Maximilian Kaske",
-          }),
-        });
-        router.refresh();
-        // e.currentTarget.reset();
-      }}
-    >
-      <label htmlFor="title" className="text-gray-600">
-        Edit title
-      </label>
-      <input id="title" name="title" className="border" {...{ defaultValue }} />
-      <button>Submit</button>
-    </form>
+    <div className="grid w-full max-w-sm items-center gap-1.5">
+      <Label htmlFor="title">Edit title</Label>
+      <Input
+        id="title"
+        name="title"
+        className="border"
+        onChange={(e) => setValue(e.target.value)}
+        defaultValue={value}
+      />
+      <Button variant="outline" onClick={onClick}>
+        Submit
+      </Button>
+    </div>
   );
 }

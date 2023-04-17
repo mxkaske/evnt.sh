@@ -23,13 +23,18 @@ export default async function Home() {
   console.log(state);
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-center text-3xl">Event Sourcing</h1>
+      <h1 className="text-center text-3xl mb-6">Event Sourcing</h1>
       <div className="grid grid-cols-3 gap-8">
-        <div>
-          <h1>Change State</h1>
-          <TitleForm defaultValue={state.title || undefined} />
-          <LabelForm defaultValues={state.labels || undefined} />
-          <StatusForm defaultValue={state.status || undefined} />
+        <div className="divide-y">
+          <div className="py-4">
+            <TitleForm defaultValue={state.title || undefined} />
+          </div>
+          <div className="py-4">
+            <LabelForm defaultValues={state.labels || undefined} />
+          </div>
+          <div className="py-4">
+            <StatusForm defaultValue={state.status || undefined} />
+          </div>
         </div>
         <div className="col-span-2">
           <div className="flow-root">

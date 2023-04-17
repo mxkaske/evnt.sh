@@ -1,4 +1,4 @@
-import { UserCircleIcon } from "@heroicons/react/24/solid";
+import { User } from "lucide-react";
 
 const assigment = {
   person: { name: "Hilary Mahy", href: "#" },
@@ -12,10 +12,7 @@ export default function Assignment() {
       <div>
         <div className="relative px-1">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white">
-            <UserCircleIcon
-              className="h-4 w-4 text-gray-500"
-              aria-hidden="true"
-            />
+            <User className="h-4 w-4 text-gray-500" aria-hidden="true" />
           </div>
         </div>
       </div>

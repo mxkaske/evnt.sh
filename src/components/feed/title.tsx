@@ -1,6 +1,6 @@
 import { EventData } from "@/types/events";
-import { PencilIcon } from "@heroicons/react/24/solid";
 import { formatDistanceStrict } from "date-fns";
+import { Pencil } from "lucide-react";
 
 export default function Title({ event }: { event: EventData }) {
   return (
@@ -8,7 +8,7 @@ export default function Title({ event }: { event: EventData }) {
       <div>
         <div className="relative px-1">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white">
-            <PencilIcon className="h-4 w-4 text-gray-500" aria-hidden="true" />
+            <Pencil className="h-4 w-4 text-gray-500" aria-hidden="true" />
           </div>
         </div>
       </div>

@@ -1,6 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { Button } from "../ui/button";
+import { Checkbox } from "../ui/checkbox";
+import { Label } from "../ui/label";
 
 const LABELS = ["bug", "documentation", "duplicate", "enhancement", "question"];
 
@@ -8,6 +11,7 @@ interface LabelFormProps {
   defaultValues?: string[];
 }
 
+// REFACTOR: use state later
 export default function LabelForm({ defaultValues }: LabelFormProps) {
   const router = useRouter();
   return (
@@ -55,26 +59,25 @@ export default function LabelForm({ defaultValues }: LabelFormProps) {
           });
         }
         router.refresh();
-        // e.currentTarget.reset();
       }}
-      className="flex flex-col items-start"
+      className="grid w-full max-w-sm items-center gap-1.5"
     >
+      <Label>Labels</Label>
       {LABELS.map((label) => {
         const defaultChecked = defaultValues?.includes(label);
         return (
-          <label key={label} htmlFor={label} className="text-gray-600">
-            <input
-              type="checkbox"
+          <div key={label} className="flex items-center space-x-2">
+            <Checkbox
               value={label}
               id={label}
               name="labels"
               {...{ defaultChecked }}
             />
-            {label}
-          </label>
+            <Label htmlFor={label}>{label}</Label>
+          </div>
         );
       })}
-      <button>Submit</button>
+      <Button variant="outline">Submit</Button>
     </form>
   );
 }

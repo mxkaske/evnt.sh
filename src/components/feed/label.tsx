@@ -1,6 +1,6 @@
 import { EventData } from "@/types/events";
-import { TagIcon } from "@heroicons/react/24/solid";
 import { formatDistanceStrict } from "date-fns";
+import { Tag } from "lucide-react";
 
 export default function Label({ event }: { event: EventData }) {
   return (
@@ -8,7 +8,7 @@ export default function Label({ event }: { event: EventData }) {
       <div>
         <div className="relative px-1">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white">
-            <TagIcon className="h-4 w-4 text-gray-500" aria-hidden="true" />
+            <Tag className="h-4 w-4 text-gray-500" aria-hidden="true" />
           </div>
         </div>
       </div>

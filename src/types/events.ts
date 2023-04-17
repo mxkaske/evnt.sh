@@ -8,7 +8,7 @@ export type EventUpdateType = "update-title" | "update-status";
 export type EventType = EventCreateType | EventUpdateType | EventDeleteType;
 
 export type EventData = {
-  type: EventType;
+  type: EventType; // could be an array to allow multiple types at once!
   // how to work with arrays?
   data: string; // TODO: move to typesafe [K in EventType]
   user: string; // TODO: extend to proper type

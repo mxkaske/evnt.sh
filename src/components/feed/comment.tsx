@@ -1,4 +1,4 @@
-import { ChatBubbleLeftEllipsisIcon } from "@heroicons/react/24/solid";
+import { MessageCircle } from "lucide-react";
 
 const comment = {
   person: { name: "Eduardo Benz", href: "#" },
@@ -20,10 +20,7 @@ export default function Comment() {
         />
 
         <span className="absolute -bottom-0.5 -right-1 rounded-tl bg-white px-0.5 py-px">
-          <ChatBubbleLeftEllipsisIcon
-            className="h-4 w-4 text-gray-400"
-            aria-hidden="true"
-          />
+          <MessageCircle className="h-4 w-4 text-gray-400" aria-hidden="true" />
         </span>
       </div>
       <div className="min-w-0 flex-1">
