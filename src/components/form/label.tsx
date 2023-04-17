@@ -6,6 +6,7 @@ import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
 import { EVENT_USER } from "@/constants/event";
 
+// Maybe BADGES is better? Not to confuse with the form label aka LabelForm
 const LABELS = ["bug", "documentation", "duplicate", "enhancement", "question"];
 
 interface LabelFormProps {

@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export default function Status({ event }: { event: EventData }) {
   return (
-    <>
+    <div className="relative flex items-start space-x-3">
       <div>
         <div className="relative px-1">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white">
@@ -50,6 +50,6 @@ export default function Status({ event }: { event: EventData }) {
           </span>
         </div>
       </div>
-    </>
+    </div>
   );
 }

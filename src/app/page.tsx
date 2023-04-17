@@ -1,5 +1,4 @@
 import { EventData } from "@/types/events";
-import Example from "./ExampleFeed";
 import LabelForm from "@/components/form/label";
 import StatusForm from "@/components/form/status";
 import Label from "@/components/feed/label";
@@ -7,6 +6,8 @@ import Status from "@/components/feed/status";
 import { State } from "@/types/states";
 import TitleForm from "@/components/form/title";
 import Title from "@/components/feed/title";
+import CommentForm from "@/components/form/comment";
+import Comment from "@/components/feed/comment";
 
 const URL =
   process.env.NODE_ENV === "production"
@@ -35,6 +36,9 @@ export default async function Home() {
           <div className="py-4">
             <StatusForm defaultValue={state.status || undefined} />
           </div>
+          <div className="py-4">
+            <CommentForm />
+          </div>
         </div>
         <div className="col-span-2">
           <div className="flow-root">
@@ -50,6 +54,9 @@ export default async function Home() {
                   if (event.type.endsWith("-title")) {
                     return <Title key={event.timestamp} {...{ event }} />;
                   }
+                  if (event.type.endsWith("-comment")) {
+                    return <Comment key={event.timestamp} {...{ event }} />;
+                  }
                 }
                 return (
                   <li key={event.timestamp}>
@@ -60,9 +67,7 @@ export default async function Home() {
                           aria-hidden="true"
                         />
                       ) : null}
-                      <div className="relative flex items-start space-x-3">
-                        {renderEvent()}
-                      </div>
+                      {renderEvent()}
                     </div>
                   </li>
                 );
