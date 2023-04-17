@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
-import { Input } from "../ui/input";
 import { useState } from "react";
 import { EVENT_USER } from "@/constants/event";
 import { Textarea } from "../ui/textarea";
@@ -29,17 +28,20 @@ export default function CommentForm() {
     setValue("");
   };
   return (
-    <div className="grid w-full max-w-sm items-center gap-1.5">
+    <div className="grid w-full items-center gap-1.5 rounded-md p-3 bg-muted border border-border">
       <Label htmlFor="comment">Add comment</Label>
       <Textarea
         id="comment"
         name="comment"
+        className="bg-background"
         onChange={(e) => setValue(e.target.value)}
         defaultValue={value}
       />
-      <Button variant="outline" onClick={onClick}>
-        Submit
-      </Button>
+      <div>
+        <Button onClick={onClick} size="sm">
+          Submit
+        </Button>
+      </div>
     </div>
   );
 }

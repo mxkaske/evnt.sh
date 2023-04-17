@@ -1,3 +1,4 @@
+import { INITIAL_STATE } from "@/constants/state";
 import redis from "@/lib/redis";
 import { EventData } from "@/types/events";
 import { State } from "@/types/states";
@@ -7,11 +8,7 @@ export const revalidate = 0;
 // If including a query params timestamp, we could role back to any previous version!
 export async function GET(request: Request) {
   // TODO: MOVE to lib/events getCurrentState
-  const initialState: State = {
-    title: "",
-    labels: [],
-    status: undefined,
-  };
+  const initialState: State = INITIAL_STATE;
   const events = await redis.zrange<EventData[]>("events", 0, -1);
 
   // TODO: this is a static prototype

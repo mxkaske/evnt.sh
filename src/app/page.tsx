@@ -8,6 +8,7 @@ import TitleForm from "@/components/form/title";
 import Title from "@/components/feed/title";
 import CommentForm from "@/components/form/comment";
 import Comment from "@/components/feed/comment";
+import { Separator } from "@/components/ui/separator";
 
 const URL =
   process.env.NODE_ENV === "production"
@@ -26,21 +27,14 @@ export default async function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <h1 className="text-center text-3xl mb-6">Event Sourcing</h1>
       <div className="grid grid-cols-3 gap-8">
-        <div className="divide-y">
-          <div className="py-4">
-            <TitleForm defaultValue={state.title || undefined} />
-          </div>
-          <div className="py-4">
-            <LabelForm defaultValues={state.labels || undefined} />
-          </div>
-          <div className="py-4">
-            <StatusForm defaultValue={state.status || undefined} />
-          </div>
-          <div className="py-4">
-            <CommentForm />
-          </div>
+        <div>
+          <TitleForm defaultValue={state.title || undefined} />
+          <Separator className="my-4" />
+          <LabelForm defaultValues={state.labels || undefined} />
+          <Separator className="my-4" />
+          <StatusForm defaultValue={state.status || undefined} />
         </div>
-        <div className="col-span-2">
+        <div className="col-span-2 space-y-12">
           <div className="flow-root">
             <ul role="list" className="-mb-8">
               {events.map((event, i) => {
@@ -74,10 +68,10 @@ export default async function Home() {
               })}
             </ul>
           </div>
+          <div className="w-full">
+            <CommentForm />
+          </div>
         </div>
-        {/* <div className="max-w-md">
-          <Example />
-        </div> */}
       </div>
     </main>
   );
