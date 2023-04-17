@@ -10,7 +10,7 @@ export async function GET(request: Request) {
   const initialState: State = {
     title: "",
     labels: [],
-    status: "ready",
+    status: undefined,
   };
   const events = await redis.zrange<EventData[]>("events", 0, -1);
 

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
+import { EVENT_USER } from "@/constants/event";
 
 const LABELS = ["bug", "documentation", "duplicate", "enhancement", "question"];
 
@@ -41,7 +42,7 @@ export default function LabelForm({ defaultValues }: LabelFormProps) {
             body: JSON.stringify({
               type: "add-label",
               data: added[0],
-              user: "Maximilian Kaske",
+              user: EVENT_USER,
             }),
           });
         }
@@ -54,7 +55,7 @@ export default function LabelForm({ defaultValues }: LabelFormProps) {
             body: JSON.stringify({
               type: "remove-label",
               data: removed[0],
-              user: "Maximilian Kaske",
+              user: EVENT_USER,
             }),
           });
         }

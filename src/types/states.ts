@@ -3,6 +3,6 @@
 export type State = {
   title: string;
   labels: string[];
-  status: string;
+  status: string | undefined;
   // ...
 };

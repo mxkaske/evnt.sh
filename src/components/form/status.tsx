@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import { useState } from "react";
+import { EVENT_USER } from "@/constants/event";
 
 const STATUS = ["Ready", "In progress", "Done"];
 
@@ -30,7 +31,7 @@ export default function StatusForm({ defaultValue }: StatusFormProps) {
       body: JSON.stringify({
         type: "update-status",
         data: value,
-        user: "Maximilian Kaske",
+        user: EVENT_USER,
       }),
     });
     router.refresh();
@@ -39,7 +40,7 @@ export default function StatusForm({ defaultValue }: StatusFormProps) {
   return (
     <div className="grid w-full max-w-sm items-center gap-1.5">
       <Select name="status" onValueChange={setValue} defaultValue={value}>
-        <SelectTrigger id="status" className="w-auto">
+        <SelectTrigger id="status">
           <SelectValue placeholder="Status" />
         </SelectTrigger>
         <SelectContent>

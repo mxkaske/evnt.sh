@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { useState } from "react";
+import { EVENT_USER } from "@/constants/event";
 
 interface TitleFormProps {
   defaultValue?: string;
@@ -23,7 +24,7 @@ export default function TitleForm({ defaultValue }: TitleFormProps) {
       body: JSON.stringify({
         type: "update-title",
         data: value,
-        user: "Maximilian Kaske",
+        user: EVENT_USER,
       }),
     });
     router.refresh();
