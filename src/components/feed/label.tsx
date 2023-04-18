@@ -1,16 +1,16 @@
 import { EventData } from "@/types/events";
-import { formatDistanceStrict } from "date-fns";
-import { Tag } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Badge } from "../ui/badge";
+import ActivityIcon from "../activity/activity-icon";
+import ActivityTimestamp from "../activity/activity-timestamp";
 
 export default function Label({ event }: { event: EventData }) {
+  const text = event.type === "add-label" ? "added tag" : "removed tag";
   return (
     <div className="relative flex items-start space-x-3">
       <div>
         <div className="relative px-1">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white">
-            <Tag className="h-4 w-4 text-gray-500" aria-hidden="true" />
-          </div>
+          <ActivityIcon name="label" />
         </div>
       </div>
       <div className="min-w-0 flex-1 py-0 flex">
@@ -27,19 +27,14 @@ export default function Label({ event }: { event: EventData }) {
             <a href="#" className="font-medium text-gray-900">
               {event.user.username}
             </a>{" "}
-            {event.type === "add-label" ? "added tag" : "removed tag"}
+            {text}
           </span>{" "}
           <span className="mr-0.5">
-            <a
-              href="#"
-              className="relative inline-flex items-center rounded-full px-2.5 py-1 text-xs ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-            >
-              <span className="font-semibold text-gray-900">{event.data}</span>
+            <a href="#">
+              <Badge variant="outline">{event.data}</Badge>
             </a>{" "}
           </span>
-          <span className="whitespace-nowrap">
-            {formatDistanceStrict(new Date(event.timestamp), new Date())} ago
-          </span>
+          <ActivityTimestamp timestamp={event.timestamp} />
         </div>
       </div>
     </div>

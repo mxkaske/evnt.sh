@@ -5,6 +5,8 @@ export type EventDeleteType = "remove-label";
 export type EventCreateType = "add-label" | "add-comment";
 export type EventUpdateType = "update-title" | "update-status";
 
+// TODO: create string literal with `remove-${eventName}`, `add-${eventName}`
+
 export type EventType = EventCreateType | EventUpdateType | EventDeleteType;
 
 export type EventUserType = {

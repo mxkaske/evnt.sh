@@ -1,16 +1,14 @@
 import { EventData } from "@/types/events";
-import { formatDistanceStrict } from "date-fns";
-import { Pencil } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import ActivityIcon from "../activity/activity-icon";
+import ActivityTimestamp from "../activity/activity-timestamp";
 
 export default function Title({ event }: { event: EventData }) {
   return (
     <div className="relative flex items-start space-x-3">
       <div>
         <div className="relative px-1">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white">
-            <Pencil className="h-4 w-4 text-gray-500" aria-hidden="true" />
-          </div>
+          <ActivityIcon name="title" />
         </div>
       </div>
       <div className="min-w-0 flex-1 py-0 flex">
@@ -32,9 +30,7 @@ export default function Title({ event }: { event: EventData }) {
           <span className="mr-0.5 font-semibold text-gray-900">
             {event.data}
           </span>{" "}
-          <span className="whitespace-nowrap">
-            {formatDistanceStrict(new Date(event.timestamp), new Date())} ago
-          </span>
+          <ActivityTimestamp timestamp={event.timestamp} />
         </div>
       </div>
     </div>
