@@ -26,15 +26,15 @@ export default async function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <h1 className="text-center text-3xl mb-6">Event Sourcing</h1>
-      <div className="grid grid-cols-3 gap-8">
-        <div>
+      <div className="grid md:grid-cols-3 gap-8">
+        <div className="col-span-1">
           <TitleForm defaultValue={state.title || undefined} />
           <Separator className="my-4" />
           <LabelForm defaultValues={state.labels || undefined} />
           <Separator className="my-4" />
           <StatusForm defaultValue={state.status || undefined} />
         </div>
-        <div className="col-span-2 space-y-12">
+        <div className="col-span-1 md:col-span-2 space-y-12">
           <div className="flow-root">
             <ul role="list" className="-mb-8">
               {events.map((event, i) => {

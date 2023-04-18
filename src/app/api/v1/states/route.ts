@@ -23,21 +23,22 @@ export async function GET(request: Request) {
           state.status = data;
         } else if (event.type === "update-title") {
           state.title = data;
+        } else if (event.type === "remove-label") {
+          console.log("removing", data);
+          state.labels = state.labels.filter((label) => label !== data);
         }
       } else {
         if (event.type === "add-label") {
-          state.labels = [...state.labels, ...data];
+          // FIXME: duplications..
+          data.map((label) => state.labels.push(label));
+        } else if (event.type === "remove-label") {
+          state.labels = state.labels.filter((label) => !data.includes(label));
         }
       }
     }
-
-    // else if (event.type.startsWith("remove")) {
-    //   // remove label!
-    // }
-    // ...
   });
 
-  console.log(state);
+  // console.log(state);
   // TODO: store result inside of cache - and only calculate missing timestamp events
   // redis.set()
   // redis.ttl()

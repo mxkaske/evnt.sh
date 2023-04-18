@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
 import { EVENT_USER } from "@/constants/event";
+import { useState } from "react";
 
 // Maybe BADGES is better? Not to confuse with the form label aka LabelForm
 const LABELS = ["bug", "documentation", "duplicate", "enhancement", "question"];
@@ -14,56 +15,49 @@ interface LabelFormProps {
 }
 
 // REFACTOR: use state later
-export default function LabelForm({ defaultValues }: LabelFormProps) {
+export default function LabelForm({ defaultValues = [] }: LabelFormProps) {
+  const [values, setValues] = useState(defaultValues);
   const router = useRouter();
+  const disabled =
+    JSON.stringify(values.sort()) === JSON.stringify(defaultValues.sort());
+
+  console.log(values, defaultValues, disabled);
+
+  const onClick = async () => {
+    const added = values.filter((label) => !defaultValues?.includes(label));
+    const removed = defaultValues?.filter((label) => !values?.includes(label));
+    // TODO: how to deal with more labels
+    if (added.length > 0) {
+      await fetch("api/v1/events", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          type: "add-label",
+          "add-label": { data: added },
+          user: EVENT_USER,
+        }),
+      });
+    }
+    if (removed.length > 0) {
+      await fetch("api/v1/events", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          type: "remove-label",
+          "remove-label": { data: removed },
+          user: EVENT_USER,
+        }),
+      });
+    }
+    router.refresh();
+  };
+
   return (
-    <form
-      onSubmit={async (e) => {
-        e.preventDefault();
-        const target = e.target as typeof e.target & {
-          labels: HTMLInputElement[];
-        };
-        const added: string[] = [];
-        const removed: string[] = [];
-        Array.from(target.labels).forEach((label) => {
-          if (label.checked && !defaultValues?.includes(label.value)) {
-            added.push(label.value);
-          }
-          if (!label.checked && defaultValues?.includes(label.value)) {
-            removed.push(label.value);
-          }
-        });
-        // TODO: how to deal with more labels
-        if (added.length > 0) {
-          await fetch("api/v1/events", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              type: "add-label",
-              "add-label": { data: added },
-              user: EVENT_USER,
-            }),
-          });
-        }
-        if (removed.length > 0) {
-          await fetch("api/v1/events", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              type: "remove-label",
-              "remove-label": { data: removed },
-              user: EVENT_USER,
-            }),
-          });
-        }
-        router.refresh();
-      }}
-      className="grid w-full max-w-sm items-center gap-1.5"
-    >
+    <div className="grid w-full max-w-sm items-center gap-1.5">
       <Label>Labels</Label>
       {LABELS.map((label) => {
         const defaultChecked = defaultValues?.includes(label);
@@ -73,13 +67,22 @@ export default function LabelForm({ defaultValues }: LabelFormProps) {
               value={label}
               id={label}
               name="labels"
+              onCheckedChange={(checked) => {
+                if (checked) {
+                  setValues((prev) => [...prev, label]);
+                } else {
+                  setValues((prev) => prev.filter((l) => l !== label));
+                }
+              }}
               {...{ defaultChecked }}
             />
             <Label htmlFor={label}>{label}</Label>
           </div>
         );
       })}
-      <Button variant="outline">Submit</Button>
-    </form>
+      <Button variant="outline" onClick={onClick} disabled={disabled}>
+        Submit
+      </Button>
+    </div>
   );
 }
