@@ -14,6 +14,7 @@ interface TitleFormProps {
 export default function TitleForm({ defaultValue }: TitleFormProps) {
   const [value, setValue] = useState(defaultValue);
   const router = useRouter();
+  const disabled = value === defaultValue;
 
   const onClick = async () => {
     await fetch("api/v1/events", {
@@ -38,7 +39,7 @@ export default function TitleForm({ defaultValue }: TitleFormProps) {
         onChange={(e) => setValue(e.target.value)}
         defaultValue={value}
       />
-      <Button variant="outline" onClick={onClick}>
+      <Button variant="outline" onClick={onClick} disabled={disabled}>
         Submit
       </Button>
     </div>

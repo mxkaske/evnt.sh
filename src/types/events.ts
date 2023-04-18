@@ -32,7 +32,7 @@ type EventBase<T> = {
 
 export type EventDataType<T extends EventType> = EventBase<T> & {
   [K in T]: {
-    data: string;
+    data: string | string[]; // TODO: better definition
   };
 };
 

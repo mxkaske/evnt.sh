@@ -11,6 +11,7 @@ import { Textarea } from "../ui/textarea";
 export default function CommentForm() {
   const [value, setValue] = useState("");
   const router = useRouter();
+  const disabled = value === "";
 
   const onClick = async () => {
     await fetch("api/v1/events", {
@@ -38,7 +39,7 @@ export default function CommentForm() {
         defaultValue={value}
       />
       <div>
-        <Button onClick={onClick} size="sm">
+        <Button onClick={onClick} size="sm" disabled={disabled}>
           Submit
         </Button>
       </div>

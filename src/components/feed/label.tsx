@@ -1,11 +1,21 @@
-import { EventData } from "@/types/events";
+import { EventData, EventType } from "@/types/events";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
 import ActivityIcon from "../activity/activity-icon";
 import { formatDistanceStrict } from "date-fns";
 
-export default function Label({ event }: { event: EventData }) {
-  const text = event.type === "add-label" ? "added tag" : "removed tag";
+export default function Label({
+  event,
+  type,
+}: {
+  event: EventData;
+  type: EventType;
+}) {
+  const data = event[type].data;
+  const isMultiple = Array.isArray(data) && data.length > 1;
+  const text = `${event.type === "add-label" ? "added tag" : "removed tag"}${
+    isMultiple ? "s" : ""
+  }`;
   return (
     <div className="relative flex items-start space-x-3">
       <div className="relative px-1">
@@ -28,11 +38,17 @@ export default function Label({ event }: { event: EventData }) {
             {text}
           </span>{" "}
           <span className="mr-0.5">
-            <a href="#">
-              <Badge variant="outline">
-                {!Array.isArray(event.type) && event[event.type].data}
-              </Badge>
-            </a>{" "}
+            {Array.isArray(data) ? (
+              data.map((d) => (
+                <a href="#" key={d}>
+                  <Badge variant="outline">{d}</Badge>
+                </a>
+              ))
+            ) : (
+              <a href="#">
+                <Badge variant="outline">{data}</Badge>
+              </a>
+            )}{" "}
           </span>
           <span className="whitespace-nowrap">
             {formatDistanceStrict(new Date(event.timestamp), new Date())} ago

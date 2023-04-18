@@ -43,7 +43,13 @@ export default async function Home() {
                     !Array.isArray(event.type) &&
                     event.type.endsWith("-label")
                   ) {
-                    return <Label key={event.timestamp} {...{ event }} />;
+                    return (
+                      <Label
+                        key={event.timestamp}
+                        type={event.type}
+                        {...{ event }}
+                      />
+                    );
                   }
                   if (
                     !Array.isArray(event.type) &&

@@ -20,6 +20,7 @@ interface StatusFormProps {
 
 export default function StatusForm({ defaultValue }: StatusFormProps) {
   const [value, setValue] = useState(defaultValue);
+  const disabled = value === defaultValue;
   const router = useRouter();
 
   const onClick = async () => {
@@ -51,7 +52,7 @@ export default function StatusForm({ defaultValue }: StatusFormProps) {
           ))}
         </SelectContent>
       </Select>
-      <Button variant="outline" onClick={onClick}>
+      <Button variant="outline" onClick={onClick} disabled={disabled}>
         Submit
       </Button>
     </div>

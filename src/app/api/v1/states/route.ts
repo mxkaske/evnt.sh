@@ -11,16 +11,26 @@ export async function GET(request: Request) {
   const state: State = INITIAL_STATE;
   const events = await redis.zrange<EventData[]>("events", 0, -1);
 
-  // TODO: this is a static prototype
+  // TODO: this is a static prototype and is not for production use
   events.map((event) => {
-    console.log(event);
-    if (event.type === "add-label") {
-      state.labels.push(event[event.type].data);
-    } else if (event.type === "update-status") {
-      state.status = event[event.type].data;
-    } else if (event.type === "update-title") {
-      state.title = event[event.type].data;
+    const type = event.type;
+    if (!Array.isArray(type)) {
+      const data = event[type].data;
+      if (!Array.isArray(data)) {
+        if (event.type === "add-label") {
+          state.labels = [...state.labels, data];
+        } else if (event.type === "update-status") {
+          state.status = data;
+        } else if (event.type === "update-title") {
+          state.title = data;
+        }
+      } else {
+        if (event.type === "add-label") {
+          state.labels = [...state.labels, ...data];
+        }
+      }
     }
+
     // else if (event.type.startsWith("remove")) {
     //   // remove label!
     // }
@@ -28,7 +38,6 @@ export async function GET(request: Request) {
   });
 
   console.log(state);
-
   // TODO: store result inside of cache - and only calculate missing timestamp events
   // redis.set()
   // redis.ttl()
