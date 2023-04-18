@@ -26,7 +26,7 @@ export default function Title({ event }: { event: EventData }) {
             changed title
           </span>{" "}
           <span className="mr-0.5 font-semibold text-gray-900">
-            {event[event.type].data}
+            {!Array.isArray(event.type) && event[event.type].data}
           </span>{" "}
           <span className="whitespace-nowrap">
             {formatDistanceStrict(new Date(event.timestamp), new Date())} ago

@@ -37,7 +37,7 @@ export default function Comment({ event }: { event: EventData }) {
           </div>
         </div>
         <p className="rounded-md border border-input bg-transparent px-3 py-2 text-sm mt-0.5">
-          {event[event.type].data}
+          {!Array.isArray(event.type) && event[event.type].data}
         </p>
       </div>
     </div>

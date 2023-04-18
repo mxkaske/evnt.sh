@@ -24,19 +24,20 @@ export type EventUserType = {
 
 export type EventData = EventDataType<EventType>;
 
-// Lots of typescript magic
-export type EventDataType<T extends EventType> = {
-  type: T; // allow arrays
+type EventBase<T> = {
+  type: T | T[];
   timestamp: number;
   user: EventUserType;
-} & {
+};
+
+export type EventDataType<T extends EventType> = EventBase<T> & {
   [K in T]: {
     data: string;
   };
 };
 
 const a = {
-  type: "add-comment",
+  type: ["add-comment", "remove-label"],
   timestamp: 0,
   user: {
     id: 0,
@@ -46,4 +47,7 @@ const a = {
   "add-comment": {
     data: "",
   },
-} satisfies EventDataType<"add-comment">;
+  "remove-label": {
+    data: "",
+  },
+} satisfies EventDataType<"add-comment" | "remove-label">;

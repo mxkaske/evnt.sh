@@ -39,16 +39,28 @@ export default async function Home() {
             <ul role="list" className="-mb-8">
               {events.map((event, i) => {
                 function renderEvent() {
-                  if (event.type.endsWith("-label")) {
+                  if (
+                    !Array.isArray(event.type) &&
+                    event.type.endsWith("-label")
+                  ) {
                     return <Label key={event.timestamp} {...{ event }} />;
                   }
-                  if (event.type.endsWith("-status")) {
+                  if (
+                    !Array.isArray(event.type) &&
+                    event.type.endsWith("-status")
+                  ) {
                     return <Status key={event.timestamp} {...{ event }} />;
                   }
-                  if (event.type.endsWith("-title")) {
+                  if (
+                    !Array.isArray(event.type) &&
+                    event.type.endsWith("-title")
+                  ) {
                     return <Title key={event.timestamp} {...{ event }} />;
                   }
-                  if (event.type.endsWith("-comment")) {
+                  if (
+                    !Array.isArray(event.type) &&
+                    event.type.endsWith("-comment")
+                  ) {
                     return <Comment key={event.timestamp} {...{ event }} />;
                   }
                 }

@@ -29,7 +29,9 @@ export default function Label({ event }: { event: EventData }) {
           </span>{" "}
           <span className="mr-0.5">
             <a href="#">
-              <Badge variant="outline">{event[event.type].data}</Badge>
+              <Badge variant="outline">
+                {!Array.isArray(event.type) && event[event.type].data}
+              </Badge>
             </a>{" "}
           </span>
           <span className="whitespace-nowrap">

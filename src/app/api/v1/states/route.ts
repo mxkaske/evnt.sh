@@ -20,9 +20,10 @@ export async function GET(request: Request) {
       state.status = event[event.type].data;
     } else if (event.type === "update-title") {
       state.title = event[event.type].data;
-    } else if (event.type.startsWith("remove")) {
-      // remove label!
     }
+    // else if (event.type.startsWith("remove")) {
+    //   // remove label!
+    // }
     // ...
   });
 
