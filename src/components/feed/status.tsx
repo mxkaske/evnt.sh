@@ -3,14 +3,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
 import ActivityIcon from "../activity/activity-icon";
 import ActivityTimestamp from "../activity/activity-timestamp";
+import { formatDistanceStrict } from "date-fns";
 
 export default function Status({ event }: { event: EventData }) {
   return (
     <div className="relative flex items-start space-x-3">
-      <div>
-        <div className="relative px-1">
-          <ActivityIcon name="status" />
-        </div>
+      <div className="relative px-1">
+        <ActivityIcon name="status" />
       </div>
       <div className="min-w-0 flex-1 py-0 flex">
         <div className="h-8 flex items-center mr-1">
@@ -33,7 +32,9 @@ export default function Status({ event }: { event: EventData }) {
               <Badge variant="outline">{event.data}</Badge>
             </a>{" "}
           </span>
-          <ActivityTimestamp timestamp={event.timestamp} />
+          <span className="whitespace-nowrap">
+            {formatDistanceStrict(new Date(event.timestamp), new Date())} ago
+          </span>
         </div>
       </div>
     </div>

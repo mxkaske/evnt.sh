@@ -1,15 +1,13 @@
 import { EventData } from "@/types/events";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import ActivityIcon from "../activity/activity-icon";
-import ActivityTimestamp from "../activity/activity-timestamp";
+import { formatDistanceStrict } from "date-fns";
 
 export default function Comment({ event }: { event: EventData }) {
   return (
     <div className="relative flex items-start space-x-3">
-      <div>
-        <div className="relative px-1">
-          <ActivityIcon name="comment" />
-        </div>
+      <div className="relative px-1">
+        <ActivityIcon name="comment" />
       </div>
       <div className="min-w-0 flex-1 py-0">
         <div className="flex">
@@ -33,7 +31,9 @@ export default function Comment({ event }: { event: EventData }) {
               </a>{" "}
               commented
             </span>{" "}
-            <ActivityTimestamp timestamp={event.timestamp} />
+            <span className="whitespace-nowrap">
+              {formatDistanceStrict(new Date(event.timestamp), new Date())} ago
+            </span>
           </div>
         </div>
         <p className="rounded-md border border-input bg-transparent px-3 py-2 text-sm mt-0.5">
