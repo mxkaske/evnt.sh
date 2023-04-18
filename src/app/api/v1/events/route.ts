@@ -24,9 +24,10 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const { type, data, user } = await request.json();
+  const res = await request.json();
+  const { type, user } = res;
   const timestamp = new Date().getTime();
-  const event = { type, data, timestamp, user };
+  const event = { type, [type]: res[type], timestamp, user }; // REMINDER: works only if type is not an array
   //
   // const p = kafka.producer();
   // const res = await p.produce(TOPIC, [{ type, value: JSON.stringify(event) }]);

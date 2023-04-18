@@ -1,7 +1,6 @@
 import { EventData } from "@/types/events";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import ActivityIcon from "../activity/activity-icon";
-import ActivityTimestamp from "../activity/activity-timestamp";
 import { formatDistanceStrict } from "date-fns";
 
 export default function Title({ event }: { event: EventData }) {
@@ -27,7 +26,7 @@ export default function Title({ event }: { event: EventData }) {
             changed title
           </span>{" "}
           <span className="mr-0.5 font-semibold text-gray-900">
-            {event.data}
+            {event[event.type].data}
           </span>{" "}
           <span className="whitespace-nowrap">
             {formatDistanceStrict(new Date(event.timestamp), new Date())} ago

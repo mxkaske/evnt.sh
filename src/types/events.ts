@@ -1,11 +1,18 @@
 // DISCUSS:
 export type EventStateType = "initial-state";
 
-export type EventDeleteType = "remove-label";
-export type EventCreateType = "add-label" | "add-comment";
-export type EventUpdateType = "update-title" | "update-status";
+type Label = "label";
+type Comment = "comment";
+type Title = "title";
+type Status = "status";
 
-// TODO: create string literal with `remove-${eventName}`, `add-${eventName}`
+export type EventDeleteType = `remove-${Label}`;
+export type EventCreateType = `add-${Label | Comment}`;
+export type EventUpdateType = `update-${Title | Status}`;
+
+// OR:
+// type Command = "add" | "remove" | "change"
+// type EventType = `${Command}-${Label | Comment | ...}`
 
 export type EventType = EventCreateType | EventUpdateType | EventDeleteType;
 
@@ -15,21 +22,28 @@ export type EventUserType = {
   avatar: string;
 };
 
-export type EventData = {
-  type: EventType; // could be an array to allow multiple types at once!
-  // how to work with arrays?
-  data: string; // TODO: move to typesafe [K in EventType]
-  user: EventUserType; // TODO: extend to proper type
-  timestamp: number;
-};
+export type EventData = EventDataType<EventType>;
 
 // Lots of typescript magic
 export type EventDataType<T extends EventType> = {
-  type: T;
+  type: T; // allow arrays
   timestamp: number;
-  user: string;
+  user: EventUserType;
 } & {
   [K in T]: {
-    title: string;
+    data: string;
   };
 };
+
+const a = {
+  type: "add-comment",
+  timestamp: 0,
+  user: {
+    id: 0,
+    username: "",
+    avatar: "",
+  },
+  "add-comment": {
+    data: "",
+  },
+} satisfies EventDataType<"add-comment">;

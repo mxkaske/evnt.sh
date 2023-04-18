@@ -2,7 +2,6 @@ import { EventData } from "@/types/events";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
 import ActivityIcon from "../activity/activity-icon";
-import ActivityTimestamp from "../activity/activity-timestamp";
 import { formatDistanceStrict } from "date-fns";
 
 export default function Status({ event }: { event: EventData }) {
@@ -29,7 +28,7 @@ export default function Status({ event }: { event: EventData }) {
           </span>{" "}
           <span className="mr-0.5">
             <a href="#">
-              <Badge variant="outline">{event.data}</Badge>
+              <Badge variant="outline">{event[event.type].data}</Badge>
             </a>{" "}
           </span>
           <span className="whitespace-nowrap">

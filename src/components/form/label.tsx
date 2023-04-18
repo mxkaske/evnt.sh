@@ -42,7 +42,7 @@ export default function LabelForm({ defaultValues }: LabelFormProps) {
             },
             body: JSON.stringify({
               type: "add-label",
-              data: added[0],
+              "add-label": { data: added[0] },
               user: EVENT_USER,
             }),
           });
@@ -55,7 +55,7 @@ export default function LabelForm({ defaultValues }: LabelFormProps) {
             },
             body: JSON.stringify({
               type: "remove-label",
-              data: removed[0],
+              "remove-label": { data: removed[0] },
               user: EVENT_USER,
             }),
           });

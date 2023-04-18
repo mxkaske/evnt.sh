@@ -23,7 +23,7 @@ export default function TitleForm({ defaultValue }: TitleFormProps) {
       },
       body: JSON.stringify({
         type: "update-title",
-        data: value,
+        "update-title": { data: value },
         user: EVENT_USER,
       }),
     });

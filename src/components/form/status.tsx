@@ -30,7 +30,7 @@ export default function StatusForm({ defaultValue }: StatusFormProps) {
       },
       body: JSON.stringify({
         type: "update-status",
-        data: value,
+        "update-status": { data: value },
         user: EVENT_USER,
       }),
     });

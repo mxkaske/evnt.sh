@@ -20,8 +20,8 @@ export default function CommentForm() {
       },
       body: JSON.stringify({
         type: "add-comment",
-        data: value,
         user: EVENT_USER,
+        "add-comment": { data: value },
       }),
     });
     router.refresh(); // seems to no reset the value..

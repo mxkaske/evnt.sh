@@ -8,28 +8,31 @@ export const revalidate = 0;
 // If including a query params timestamp, we could role back to any previous version!
 export async function GET(request: Request) {
   // TODO: MOVE to lib/events getCurrentState
-  const initialState: State = INITIAL_STATE;
+  const state: State = INITIAL_STATE;
   const events = await redis.zrange<EventData[]>("events", 0, -1);
 
   // TODO: this is a static prototype
   events.map((event) => {
+    console.log(event);
     if (event.type === "add-label") {
-      initialState.labels.push(event.data);
+      state.labels.push(event[event.type].data);
     } else if (event.type === "update-status") {
-      initialState.status = event.data;
+      state.status = event[event.type].data;
     } else if (event.type === "update-title") {
-      initialState.title = event.data;
+      state.title = event[event.type].data;
     } else if (event.type.startsWith("remove")) {
       // remove label!
     }
     // ...
   });
 
+  console.log(state);
+
   // TODO: store result inside of cache - and only calculate missing timestamp events
   // redis.set()
   // redis.ttl()
 
-  return new Response(JSON.stringify(initialState), {
+  return new Response(JSON.stringify(state), {
     status: 200,
     headers: { "Content-Type": "application/json" },
   });

@@ -57,7 +57,7 @@ export default async function Home() {
                     <div className="relative pb-8">
                       {i !== events.length - 1 ? (
                         <span
-                          className="absolute left-5 top-5 -ml-px h-full w-0.5 bg-gray-200"
+                          className="absolute left-5 top-5 -ml-px h-full w-0.5 bg-accent"
                           aria-hidden="true"
                         />
                       ) : null}
