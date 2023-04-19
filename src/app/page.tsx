@@ -9,6 +9,7 @@ import Title from "@/components/feed/title";
 import CommentForm from "@/components/form/comment";
 import Comment from "@/components/feed/comment";
 import { Separator } from "@/components/ui/separator";
+import DeleteButton from "./components/delete-button";
 
 const URL =
   process.env.NODE_ENV === "production"
@@ -24,8 +25,8 @@ export default async function Home() {
   const state = (await stateRes.json()) as State;
   console.log(state);
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-center text-3xl mb-6">Event Sourcing</h1>
+    <main className="flex min-h-screen flex-col items-center py-4 md:py-8 px-3 md:px-6">
+      <h1 className="text-center font-bold text-3xl mb-6">Event Store</h1>
       <div className="grid md:grid-cols-3 gap-8">
         <div className="col-span-1">
           <TitleForm defaultValue={state.title || undefined} />
@@ -34,8 +35,8 @@ export default async function Home() {
           <Separator className="my-4" />
           <StatusForm defaultValue={state.status || undefined} />
         </div>
-        <div className="col-span-1 md:col-span-2 space-y-12">
-          <div className="flow-root">
+        <div className="col-span-1 md:col-span-2">
+          <div className="flow-root mb-8">
             <ul role="list" className="-mb-8">
               {events.map((event, i) => {
                 function renderEvent() {
@@ -88,6 +89,10 @@ export default async function Home() {
           </div>
           <div className="w-full">
             <CommentForm />
+          </div>
+          <Separator className="my-4" />
+          <div className="w-full text-right">
+            <DeleteButton />
           </div>
         </div>
       </div>

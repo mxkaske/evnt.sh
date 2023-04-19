@@ -37,7 +37,8 @@ export default function Label({
             </a>{" "}
             {text}
           </span>{" "}
-          <span className="mr-0.5">
+          {/* TODO: check if space-x-* is working */}
+          <span className="mr-0.5 space-x-0.5">
             {Array.isArray(data) ? (
               data.map((d) => (
                 <a href="#" key={d}>

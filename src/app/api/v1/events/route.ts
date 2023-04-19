@@ -6,7 +6,7 @@ export const revalidate = 0;
 const TOPIC = process.env.UPSTASH_KAFKA_TOPIC!;
 
 export async function GET(request: Request) {
-  const lastOffset = await redis.get<number>("lastOffset");
+  // const lastOffset = await redis.get<number>("lastOffset");
   //
   // const c = kafka.consumer();
   // const res = await c.fetch({
@@ -37,8 +37,10 @@ export async function POST(request: Request) {
     score: timestamp,
     member: JSON.stringify(event),
   });
-  return new Response("Event created", {
-    status: 201,
-    headers: { "Content-Type": "application/json" },
-  });
+  return new Response("Event created", { status: 201 });
+}
+
+export async function DELETE(request: Request) {
+  await redis.del("events");
+  return new Response("Event deleted", { status: 202 });
 }
