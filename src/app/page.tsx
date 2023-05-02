@@ -10,17 +10,13 @@ import CommentForm from "@/components/form/comment";
 import Comment from "@/components/feed/comment";
 import { Separator } from "@/components/ui/separator";
 import DeleteButton from "./components/delete-button";
-
-const URL =
-  process.env.NODE_ENV === "production"
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://127.0.0.1:3000";
+import { BASE_URL } from "@/constants/fetch";
 
 export const revalidate = 0;
 
 export default async function Home() {
-  const eventsRes = await fetch(`${URL}/api/v1/events`);
-  const stateRes = await fetch(`${URL}/api/v1/states`);
+  const eventsRes = await fetch(`${BASE_URL}/api/v1/events`);
+  const stateRes = await fetch(`${BASE_URL}/api/v1/states`);
   const events = (await eventsRes.json()) as EventData[];
   const state = (await stateRes.json()) as State;
   console.log(state);

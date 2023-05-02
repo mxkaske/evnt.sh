@@ -1,17 +1,26 @@
 import { INITIAL_STATE } from "@/constants/state";
 import redis from "@/lib/redis";
 import { EventData } from "@/types/events";
-import { State } from "@/types/states";
 
 export const revalidate = 0;
 
 // If including a query params timestamp, we could role back to any previous version!
 export async function GET(request: Request) {
-  // TODO: MOVE to lib/events getCurrentState
-  const state: State = INITIAL_STATE;
-  const events = await redis.zrange<EventData[]>("events", 0, -1);
+  const { searchParams } = new URL(request.url);
+  const timestamp = searchParams.get("timestamp");
+  const state = INITIAL_STATE;
+  // FIXME: hotfix avoids the duplicates
+  state.labels = [];
+  state.status = undefined;
+
+  const events = timestamp
+    ? await redis.zrange<EventData[]>("events", 0, Number(timestamp), {
+        byScore: true,
+      })
+    : await redis.zrange<EventData[]>("events", 0, -1);
 
   // TODO: this is a static prototype and is not for production use
+  // IDEA: should be a function inside of a Class
   events.map((event) => {
     const type = event.type;
     if (!Array.isArray(type)) {
@@ -24,12 +33,10 @@ export async function GET(request: Request) {
         } else if (event.type === "update-title") {
           state.title = data;
         } else if (event.type === "remove-label") {
-          console.log("removing", data);
           state.labels = state.labels.filter((label) => label !== data);
         }
       } else {
         if (event.type === "add-label") {
-          // FIXME: duplications..
           data.map((label) => state.labels.push(label));
         } else if (event.type === "remove-label") {
           state.labels = state.labels.filter((label) => !data.includes(label));
@@ -38,7 +45,6 @@ export async function GET(request: Request) {
     }
   });
 
-  // console.log(state);
   // TODO: store result inside of cache - and only calculate missing timestamp events
   // redis.set()
   // redis.ttl()

@@ -29,16 +29,21 @@ export default function CommentForm() {
     setValue("");
   };
   return (
-    <div className="grid w-full items-center gap-1.5 rounded-md p-3 bg-muted border border-border">
-      <Label htmlFor="comment">Add comment</Label>
-      <Textarea
-        id="comment"
-        name="comment"
-        className="bg-background"
-        onChange={(e) => setValue(e.target.value)}
-        defaultValue={value}
-      />
-      <div>
+    <div className="relative">
+      <div className="rounded-lg pb-12 shadow-sm border border-border ring-gray-300 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-ring">
+        <Label htmlFor="comment" className="sr-only">
+          Add your comment
+        </Label>
+        <textarea
+          id="comment"
+          name="comment"
+          className="block w-full resize-none border-0 bg-transparent py-2 px-3 text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm sm:leading-6"
+          placeholder="Add your comment..."
+          onChange={(e) => setValue(e.target.value)}
+          defaultValue={value}
+        />
+      </div>
+      <div className="absolute left-0 bottom-0 flex justify-between py-2 px-3">
         <Button onClick={onClick} size="sm" disabled={disabled}>
           Submit
         </Button>
