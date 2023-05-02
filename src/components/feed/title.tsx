@@ -18,14 +18,14 @@ export default function Title({ event }: { event: EventData }) {
             </Avatar>
           </a>
         </div>
-        <div className="text-sm leading-7 text-gray-500">
+        <div className="text-sm leading-7 text-muted-foreground">
           <span className="mr-0.5">
-            <a href="#" className="font-medium text-gray-900">
+            <a href="#" className="font-medium text-foreground">
               {event.user.username}
             </a>{" "}
             changed title
           </span>{" "}
-          <span className="mr-0.5 font-semibold text-gray-900">
+          <span className="mr-0.5 font-semibold text-foreground">
             {!Array.isArray(event.type) && event[event.type].data}
           </span>{" "}
           <span className="whitespace-nowrap">

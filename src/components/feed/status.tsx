@@ -19,9 +19,9 @@ export default function Status({ event }: { event: EventData }) {
             </Avatar>
           </a>
         </div>
-        <div className="text-sm leading-8 text-gray-500">
+        <div className="text-sm leading-8 text-muted-foreground">
           <span className="mr-0.5">
-            <a href="#" className="font-medium text-gray-900">
+            <a href="#" className="font-medium text-foreground">
               {event.user.username}
             </a>{" "}
             updated status

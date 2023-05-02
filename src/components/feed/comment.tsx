@@ -10,7 +10,7 @@ export default function Comment({ event }: { event: EventData }) {
         {/* Include Avatar here instead - see tailwindui? */}
         <ActivityIcon name="comment" timestamp={event.timestamp} />
       </div>
-      <div className="min-w-0 flex-1 rounded-md border border-input p-2 -m-2">
+      <div className="min-w-0 flex-1 rounded-md border border-input p-2 -my-2 -ml-2">
         <div className="flex">
           <div className="h-8 flex items-center mr-1">
             <a href="#">
@@ -25,9 +25,9 @@ export default function Comment({ event }: { event: EventData }) {
               </Avatar>
             </a>
           </div>
-          <div className="text-sm leading-7 text-gray-500">
+          <div className="text-sm leading-7 text-muted-foreground">
             <span className="mr-0.5">
-              <a href="#" className="font-medium text-gray-900">
+              <a href="#" className="font-medium text-foreground">
                 {event.user.username}
               </a>{" "}
               commented

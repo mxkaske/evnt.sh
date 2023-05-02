@@ -30,9 +30,9 @@ export default function Label({
             </Avatar>
           </a>
         </div>
-        <div className="text-sm leading-7 text-gray-500">
+        <div className="text-sm leading-7 text-muted-foreground">
           <span className="mr-0.5">
-            <a href="#" className="font-medium text-gray-900">
+            <a href="#" className="font-medium text-foreground">
               {event.user.username}
             </a>{" "}
             {text}

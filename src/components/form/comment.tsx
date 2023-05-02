@@ -30,14 +30,14 @@ export default function CommentForm() {
   };
   return (
     <div className="relative">
-      <div className="rounded-lg pb-12 shadow-sm border border-border ring-gray-300 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-ring">
+      <div className="rounded-lg pb-12 shadow-sm border border-border ring-ring ring-offset-background focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-ring">
         <Label htmlFor="comment" className="sr-only">
           Add your comment
         </Label>
         <textarea
           id="comment"
           name="comment"
-          className="block w-full resize-none border-0 bg-transparent py-2 px-3 text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm sm:leading-6"
+          className="block w-full resize-none border-0 bg-transparent py-2 px-3 placeholder:text-muted-foreground focus:outline-none sm:text-sm sm:leading-6"
           placeholder="Add your comment..."
           onChange={(e) => setValue(e.target.value)}
           defaultValue={value}
