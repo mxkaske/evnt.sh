@@ -1,5 +1,13 @@
 import { State } from "@/types/states";
 
+export const LABELS = [
+  "bug",
+  "documentation",
+  "duplicate",
+  "enhancement",
+  "question",
+];
+
 export const INITIAL_STATE: State = {
   title: "",
   status: undefined,

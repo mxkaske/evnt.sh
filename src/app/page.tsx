@@ -11,7 +11,8 @@ import Comment from "@/components/feed/comment";
 import { Separator } from "@/components/ui/separator";
 import DeleteButton from "./components/delete-button";
 import { BASE_URL } from "@/constants/fetch";
-import { ModeToggle } from "@/components/mode-toggle";
+import { ModeToggle } from "@/components/theme/mode-toggle";
+import EmptyState from "./components/empty-state";
 
 export const revalidate = 0;
 
@@ -23,6 +24,9 @@ export default async function Home() {
   console.log(state);
   return (
     <main className="min-h-screen flex flex-col py-4 md:py-8 px-3 md:px-6">
+      <div className="mb-4">
+        <EmptyState />
+      </div>
       <div className="flex flex-col items-center gap-4 flex-1">
         <h1 className="text-center font-bold text-3xl mb-6">Event Store</h1>
         <div className="grid md:grid-cols-3 gap-8">

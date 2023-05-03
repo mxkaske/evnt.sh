@@ -6,9 +6,7 @@ import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
 import { EVENT_USER } from "@/constants/event";
 import { useState } from "react";
-
-// Maybe BADGES is better? Not to confuse with the form label aka LabelForm
-const LABELS = ["bug", "documentation", "duplicate", "enhancement", "question"];
+import { LABELS } from "@/constants/state";
 
 interface LabelFormProps {
   defaultValues?: string[];
@@ -20,8 +18,6 @@ export default function LabelForm({ defaultValues = [] }: LabelFormProps) {
   const router = useRouter();
   const disabled =
     JSON.stringify(values.sort()) === JSON.stringify(defaultValues.sort());
-
-  console.log(values, defaultValues, disabled);
 
   const onClick = async () => {
     const added = values.filter((label) => !defaultValues?.includes(label));

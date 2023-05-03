@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google";
 import "@/styles/globals.css";
-import { ThemeProvider } from "@/components/provider/theme-provider";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" style={{ colorScheme: "system" }}>
       {/* FIXME: remove on prod */}
       {process.env.NODE_ENV === "development" ? (
         <script async src="https://cdn.tailwindcss.com"></script>
