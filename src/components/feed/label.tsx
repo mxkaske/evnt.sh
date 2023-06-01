@@ -13,9 +13,8 @@ export default function Label({
 }) {
   const data = event[type].data;
   const isMultiple = Array.isArray(data) && data.length > 1;
-  const text = `${event.type === "add-label" ? "added tag" : "removed tag"}${
-    isMultiple ? "s" : ""
-  }`;
+  const text = `${event.type === "add-label" ? "added tag" : "removed tag"}${isMultiple ? "s" : ""
+    }`;
   return (
     <div className="relative flex items-start space-x-3">
       <div className="relative px-1">

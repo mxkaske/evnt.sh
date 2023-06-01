@@ -37,3 +37,5 @@ Example
 
 - Chess game where every move is stored as event. That way, you can replay the whole game.
 - Inside the [Vercel Activity Dashboard](https://vercel.com/dashboard/activity) you can filter by `type`. Check it out, again.
+
+- Event Types: Should always start with the context and end with a verb. Instead of `"create-comment"`, use `"comment-create"`. Makes it easier to group/order them by context.
