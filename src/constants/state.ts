@@ -4,7 +4,7 @@ export const LABELS = [
   "bug",
   "documentation",
   "duplicate",
-  "enhancement",
+  // "enhancement",
   "question",
 ];
 
