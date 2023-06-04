@@ -25,7 +25,7 @@ export default function CommentForm() {
     router.refresh(); // seems to no reset the value..
   };
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <div className="rounded-lg pb-12 shadow-sm border border-border ring-ring ring-offset-background focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-ring">
         <Label htmlFor="comment" className="sr-only">
           Add your comment

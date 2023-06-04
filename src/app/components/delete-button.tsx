@@ -19,6 +19,7 @@ export default function DeleteButton() {
 
   const onClick = async () => {
     await fetch(`/api/v1/events`, { method: "DELETE" });
+    await fetch(`/api/v1/states`, { method: "DELETE" })
     router.refresh();
   };
 

@@ -50,7 +50,7 @@ export default function LabelForm({ defaultValues = [] }: LabelFormProps) {
   };
 
   return (
-    <div className="grid w-full max-w-sm items-center gap-1.5">
+    <div className="grid gap-1.5">
       <Label>Labels</Label>
       {LABELS.map((label) => {
         const defaultChecked = defaultValues?.includes(label);

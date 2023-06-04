@@ -37,7 +37,7 @@ export default function StatusForm({ defaultValue }: StatusFormProps) {
   };
 
   return (
-    <div className="grid w-full max-w-sm items-center gap-1.5">
+    <div className="grid gap-1.5">
       <Select name="status" onValueChange={setValue} defaultValue={value}>
         <SelectTrigger id="status">
           <SelectValue placeholder="Status" />

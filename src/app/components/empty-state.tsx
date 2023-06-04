@@ -19,6 +19,7 @@ import { useState } from "react";
 export default function EmptyState() {
   const [value, setValue] = useState("");
   const router = useRouter();
+  const disabled = value === ""
 
   const onClick = async () => {
     await fetch("api/v1/states", {
@@ -34,7 +35,7 @@ export default function EmptyState() {
   };
 
   return (
-    <div className="text-center">
+    <div className="text-center p-6 border border-border rounded-lg border-dashed">
       <h3 className="text-sm font-semibold text-foreground">No state</h3>
       <p className="mt-1 text-sm text-muted-foreground">
         Get started by creating a new state.
@@ -68,7 +69,7 @@ export default function EmptyState() {
               </div>
             </div>
             <DialogFooter>
-              <Button type="submit" onClick={onClick}>Create</Button>
+              <Button type="submit" {...{ onClick, disabled }}>Create</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>

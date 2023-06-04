@@ -13,7 +13,7 @@ function removeSuffixType(word: string) {
 // DISCUSS: add zod for json validation
 // TODO: create wrapper for createEvent
 
-export async function GET(request: Request) {
+export async function GET() {
   const state = await redis.json.get("state") as State | undefined
   return new Response(JSON.stringify(state), {
     status: 200,
@@ -32,6 +32,7 @@ export async function POST(request: Request) {
   })
 }
 
+// TODO: fix labels array issue - ONLY last updated label will be displayed. doesnt matter deleted or created
 export async function PUT(request: Request) {
   const json = await request.json()
   const { type, data } = json as { type: EventType, data: string | number | string[] };
@@ -44,9 +45,7 @@ export async function PUT(request: Request) {
 }
 
 export async function DELETE(request: Request) {
-  // TODO: create Event
   await redis.del("state")
-
   return new Response("Deleted", {
     status: 200
   })

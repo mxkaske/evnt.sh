@@ -10,7 +10,7 @@ export function createEventObject<T>(type: EventType, data: T) {
   return { score: timestamp, member: JSON.stringify(event) }
 }
 
-// add name of redis key - default is "events"
+// add name of redis key - default is "events" - goal is "events:comments:id"
 export async function createEvent<T>(type: EventType, data: T) {
   const eventObj = createEventObject(type, data)
   const res = await redis.zadd("events", eventObj);

@@ -15,3 +15,9 @@ export async function POST(request: Request) {
     status: 201
   })
 }
+// TODO: type should be automatically set!
+export async function PUT(request: Request) {
+  const json = await request.json()
+  const { type, data } = json as { type: EventType, data: string }
+  createEvent(type, {data});
+}
