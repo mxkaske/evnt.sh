@@ -1,18 +1,18 @@
 // DISCUSS:
 export type EventStateType = "initial-state";
 
-type Label = "label";
+type Labels = "labels";
 type Comment = "comment";
 type Title = "title";
 type Status = "status";
 
-export type EventDeleteType = `remove-${Label}`;
-export type EventCreateType = `add-${Label | Comment}`;
-export type EventUpdateType = `update-${Title | Status}`;
+export type EventDeleteType = `${Labels}-delete`;
+export type EventCreateType = `${Labels | Comment}-create`;
+export type EventUpdateType = `${Title | Status}-update`;
 
 // OR:
 // type Command = "add" | "remove" | "change"
-// type EventType = `${Command}-${Label | Comment | ...}`
+// type EventType = `${Label | Comment | ...}-${Command}`
 
 export type EventType = EventCreateType | EventUpdateType | EventDeleteType;
 
@@ -37,17 +37,17 @@ export type EventDataType<T extends EventType> = EventBase<T> & {
 };
 
 const a = {
-  type: ["add-comment", "remove-label"],
+  type: ["comment-create", "labels-delete"],
   timestamp: 0,
   user: {
     id: 0,
     username: "",
     avatar: "",
   },
-  "add-comment": {
+  "comment-create": {
     data: "",
   },
-  "remove-label": {
+  "labels-delete": {
     data: "",
   },
-} satisfies EventDataType<"add-comment" | "remove-label">;
+} satisfies EventDataType<"comment-create" | "labels-delete">;

@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
-import { EVENT_USER } from "@/constants/event";
 import { useState } from "react";
 import { LABELS } from "@/constants/state";
 
@@ -22,30 +21,28 @@ export default function LabelForm({ defaultValues = [] }: LabelFormProps) {
   const onClick = async () => {
     const added = values.filter((label) => !defaultValues?.includes(label));
     const removed = defaultValues?.filter((label) => !values?.includes(label));
-    // TODO: how to deal with more labels
+    // FIXME: currently always added because defaultValues seem to be falsy
     if (added.length > 0) {
-      await fetch("api/v1/events", {
-        method: "POST",
+      await fetch("api/v1/states", {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          type: "add-label",
-          "add-label": { data: added },
-          user: EVENT_USER,
+          type: "labels-create",
+          data: added
         }),
       });
     }
     if (removed.length > 0) {
-      await fetch("api/v1/events", {
-        method: "POST",
+      await fetch("api/v1/states", {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          type: "remove-label",
-          "remove-label": { data: removed },
-          user: EVENT_USER,
+          type: "labels-delete",
+          data: removed
         }),
       });
     }

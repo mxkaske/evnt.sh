@@ -8,7 +8,7 @@ export default function Status({ event }: { event: EventData }) {
   return (
     <div className="relative flex items-start space-x-3">
       <div className="relative px-1">
-        <ActivityIcon name="status" timestamp={event.timestamp} />
+        <ActivityIcon name="status" />
       </div>
       <div className="min-w-0 flex-1 py-0 flex">
         <div className="h-8 flex items-center mr-1">

@@ -10,7 +10,6 @@ import {
   SelectValue,
 } from "../ui/select";
 import { useState } from "react";
-import { EVENT_USER } from "@/constants/event";
 
 const STATUS = ["Ready", "In progress", "Done"];
 
@@ -24,15 +23,14 @@ export default function StatusForm({ defaultValue }: StatusFormProps) {
   const router = useRouter();
 
   const onClick = async () => {
-    await fetch("api/v1/events", {
-      method: "POST",
+    await fetch("api/v1/states", {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        type: "update-status",
-        "update-status": { data: value },
-        user: EVENT_USER,
+        type: "status-update",
+        data: value
       }),
     });
     router.refresh();

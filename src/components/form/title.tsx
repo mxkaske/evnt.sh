@@ -5,7 +5,6 @@ import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { useState } from "react";
-import { EVENT_USER } from "@/constants/event";
 
 interface TitleFormProps {
   defaultValue?: string;
@@ -17,19 +16,19 @@ export default function TitleForm({ defaultValue }: TitleFormProps) {
   const disabled = value === defaultValue;
 
   const onClick = async () => {
-    await fetch("api/v1/events", {
-      method: "POST",
+    await fetch("api/v1/states", {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        type: "update-title",
-        "update-title": { data: value },
-        user: EVENT_USER,
+        type: "title-update",
+        data: value
       }),
     });
     router.refresh();
   };
+
   return (
     <div className="grid w-full max-w-sm items-center gap-1.5">
       <Label htmlFor="title">Edit title</Label>

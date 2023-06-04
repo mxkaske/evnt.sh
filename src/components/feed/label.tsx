@@ -13,12 +13,12 @@ export default function Label({
 }) {
   const data = event[type].data;
   const isMultiple = Array.isArray(data) && data.length > 1;
-  const text = `${event.type === "add-label" ? "added tag" : "removed tag"}${isMultiple ? "s" : ""
+  const text = `${event.type === "labels-create" ? "added tag" : "removed tag"}${isMultiple ? "s" : ""
     }`;
   return (
     <div className="relative flex items-start space-x-3">
       <div className="relative px-1">
-        <ActivityIcon name="label" timestamp={event.timestamp} />
+        <ActivityIcon name="label" />
       </div>
       <div className="min-w-0 flex-1 py-0 flex">
         <div className="h-8 flex items-center mr-1">

@@ -7,7 +7,7 @@ export default function Title({ event }: { event: EventData }) {
   return (
     <div className="relative flex items-start space-x-3">
       <div className="relative px-1">
-        <ActivityIcon name="title" timestamp={event.timestamp} />
+        <ActivityIcon name="title" />
       </div>
       <div className="min-w-0 flex-1 py-0 flex">
         <div className="h-8 flex items-center mr-1">
@@ -23,7 +23,7 @@ export default function Title({ event }: { event: EventData }) {
             <a href="#" className="font-medium text-foreground">
               {event.user.username}
             </a>{" "}
-            changed title
+            updated title
           </span>{" "}
           <span className="mr-0.5 font-semibold text-foreground">
             {!Array.isArray(event.type) && event[event.type].data}

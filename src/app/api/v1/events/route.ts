@@ -40,7 +40,10 @@ export async function POST(request: Request) {
   return new Response("Event created", { status: 201 });
 }
 
+// DANGEROUS - ONLY USE LOCALLY
 export async function DELETE(request: Request) {
   await redis.del("events");
+  await redis.del("state")
+  await redis.del("comments")
   return new Response("Event deleted", { status: 202 });
 }

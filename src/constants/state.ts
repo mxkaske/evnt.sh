@@ -10,7 +10,7 @@ export const LABELS = [
 
 export const INITIAL_STATE: State = {
   title: "",
-  status: undefined,
+  status: "Ready",
   labels: [],
 };
 

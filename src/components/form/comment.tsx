@@ -4,29 +4,25 @@ import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { useState } from "react";
-import { EVENT_USER } from "@/constants/event";
-import { Textarea } from "../ui/textarea";
 
-// REMINDER: no default value
 export default function CommentForm() {
   const [value, setValue] = useState("");
   const router = useRouter();
   const disabled = value === "";
 
   const onClick = async () => {
-    await fetch("api/v1/events", {
+    await fetch("api/v1/comments", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        type: "add-comment",
-        user: EVENT_USER,
-        "add-comment": { data: value },
-      }),
-    });
-    router.refresh(); // seems to no reset the value..
+        type: "comment-create",
+        data: value
+      })
+    })
     setValue("");
+    router.refresh(); // seems to no reset the value..
   };
   return (
     <div className="relative">

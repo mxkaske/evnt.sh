@@ -1,56 +1,53 @@
 import { INITIAL_STATE } from "@/constants/state";
+import { createEvent } from "@/lib/events";
 import redis from "@/lib/redis";
-import { EventData } from "@/types/events";
+import { EventType } from "@/types/events";
+import { State } from "@/types/states";
 
 export const revalidate = 0;
 
-// If including a query params timestamp, we could role back to any previous version!
+function removeSuffixType(word: string) {
+  return word.replace(/-(create|update|delete)$/, '')
+}
+
+// DISCUSS: add zod for json validation
+// TODO: create wrapper for createEvent
+
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const timestamp = searchParams.get("timestamp");
-  const state = INITIAL_STATE;
-  // FIXME: hotfix avoids the duplicates
-  state.labels = [];
-  state.status = undefined;
-
-  const events = timestamp
-    ? await redis.zrange<EventData[]>("events", 0, Number(timestamp), {
-        byScore: true,
-      })
-    : await redis.zrange<EventData[]>("events", 0, -1);
-
-  // TODO: this is a static prototype and is not for production use
-  // IDEA: should be a function inside of a Class
-  events.map((event) => {
-    const type = event.type;
-    if (!Array.isArray(type)) {
-      const data = event[type].data;
-      if (!Array.isArray(data)) {
-        if (event.type === "add-label") {
-          state.labels = [...state.labels, data];
-        } else if (event.type === "update-status") {
-          state.status = data;
-        } else if (event.type === "update-title") {
-          state.title = data;
-        } else if (event.type === "remove-label") {
-          state.labels = state.labels.filter((label) => label !== data);
-        }
-      } else {
-        if (event.type === "add-label") {
-          data.map((label) => state.labels.push(label));
-        } else if (event.type === "remove-label") {
-          state.labels = state.labels.filter((label) => !data.includes(label));
-        }
-      }
-    }
-  });
-
-  // TODO: store result inside of cache - and only calculate missing timestamp events
-  // redis.set()
-  // redis.ttl()
-
+  const state = await redis.json.get("state") as State | undefined
   return new Response(JSON.stringify(state), {
     status: 200,
     headers: { "Content-Type": "application/json" },
   });
+}
+
+// TODO: CREATE NEW STATE - no event triggered for now
+export async function POST(request: Request) {
+  const json = await request.json()
+  const data = { ...INITIAL_STATE, ...json }
+  await redis.json.set("state", "$", JSON.stringify(data))
+
+  return new Response("Created", {
+    status: 201
+  })
+}
+
+export async function PUT(request: Request) {
+  const json = await request.json()
+  const { type, data } = json as { type: EventType, data: string | number | string[] };
+  createEvent(type, { data });
+  const attribute = removeSuffixType(type);
+  await redis.json.set("state", `$.${attribute}`, JSON.stringify(data));
+  return new Response("Updated", {
+    status: 201
+  })
+}
+
+export async function DELETE(request: Request) {
+  // TODO: create Event
+  await redis.del("state")
+
+  return new Response("Deleted", {
+    status: 200
+  })
 }

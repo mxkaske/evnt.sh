@@ -1,4 +1,5 @@
-/* eslint-disable react/no-unescaped-entities */
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,8 +13,26 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function EmptyState() {
+  const [value, setValue] = useState("");
+  const router = useRouter();
+
+  const onClick = async () => {
+    await fetch("api/v1/states", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: value
+      }),
+    });
+    router.refresh();
+  };
+
   return (
     <div className="text-center">
       <h3 className="text-sm font-semibold text-foreground">No state</h3>
@@ -30,27 +49,26 @@ export default function EmptyState() {
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle>Edit profile</DialogTitle>
+              <DialogTitle>Create state</DialogTitle>
               <DialogDescription>
-                Make changes to your profile here. Click save when you're done.
+                Start a new state by entering a title.
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="title" className="text-right">
-                  Name
+                  Title
                 </Label>
-                <Input id="title" className="col-span-3" />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="status" className="text-right">
-                  Status
-                </Label>
-                <Input id="status" value="Ready" className="col-span-3" />
+                <Input
+                  id="title"
+                  className="col-span-3"
+                  value={value}
+                  onChange={(e) => setValue(e.currentTarget.value)}
+                />
               </div>
             </div>
             <DialogFooter>
-              <Button type="submit">Create state</Button>
+              <Button type="submit" onClick={onClick}>Create</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>

@@ -7,8 +7,7 @@ export default function Comment({ event }: { event: EventData }) {
   return (
     <div className="relative flex items-start">
       <div className="relative px-1 mr-3">
-        {/* Include Avatar here instead - see tailwindui? */}
-        <ActivityIcon name="comment" timestamp={event.timestamp} />
+        <ActivityIcon name="comment" />
       </div>
       <div className="min-w-0 flex-1 rounded-md border border-input p-2 -my-2 -ml-2">
         <div className="flex">
