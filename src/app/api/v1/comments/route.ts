@@ -21,3 +21,5 @@ export async function PUT(request: Request) {
   const { type, data } = json as { type: EventType, data: string }
   createEvent(type, {data});
 }
+
+// export async function DELETE(request: Request) {}

@@ -4,21 +4,37 @@ import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
-import { useState } from "react";
 import { LABELS } from "@/constants/state";
+import * as React from "react"
+import { Check, ChevronsUpDown } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { Badge } from "@/components/ui/badge";
 
 interface LabelFormProps {
   defaultValues?: string[];
 }
 
-// REFACTOR: use state later
 export default function LabelForm({ defaultValues = [] }: LabelFormProps) {
-  const [values, setValues] = useState(defaultValues);
+  const [open, setOpen] = React.useState(false)
+  const [values, setValues] = React.useState(defaultValues)
   const router = useRouter();
-  const disabled =
-    JSON.stringify(values.sort()) === JSON.stringify(defaultValues.sort());
+  //   const disabled =
+  //     JSON.stringify(values.sort()) === JSON.stringify(defaultValues.sort());
 
-  const onClick = async () => {
+  const handleChange = async () => {
     const added = values.filter((label) => !defaultValues?.includes(label));
     const removed = defaultValues?.filter((label) => !values?.includes(label));
     // FIXME: currently always added because defaultValues seem to be falsy
@@ -47,35 +63,62 @@ export default function LabelForm({ defaultValues = [] }: LabelFormProps) {
       });
     }
     router.refresh();
-  };
+  }
+
+  const onOpenChange = (value: boolean) => {
+    // && !disabled
+    if (!value) {
+      handleChange()
+    }
+    setOpen(value)
+  }
+
 
   return (
     <div className="grid gap-1.5">
-      <Label>Labels</Label>
-      {LABELS.map((label) => {
-        const defaultChecked = defaultValues?.includes(label);
-        return (
-          <div key={label} className="flex items-center space-x-2">
-            <Checkbox
-              value={label}
-              id={label}
-              name="labels"
-              onCheckedChange={(checked) => {
-                if (checked) {
-                  setValues((prev) => [...prev, label]);
-                } else {
-                  setValues((prev) => prev.filter((l) => l !== label));
-                }
-              }}
-              {...{ defaultChecked }}
-            />
-            <Label htmlFor={label}>{label}</Label>
-          </div>
-        );
-      })}
-      <Button variant="outline" onClick={onClick} disabled={disabled}>
-        Submit
-      </Button>
+      <Label onClick={() => setOpen(true)}>Labels</Label>
+      <Popover open={open} onOpenChange={onOpenChange}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            className="w-full justify-between line-clamp-1"
+          >
+            <span className="truncate">{values.length > 0
+              ? values.join(", ")
+              : "Select label..."}</span>
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="p-0">
+          <Command>
+            <CommandInput placeholder="Search label..." />
+            <CommandEmpty>No label found.</CommandEmpty>
+            <CommandGroup>
+              {LABELS.map((label) => (
+                <CommandItem
+                  key={label}
+                  onSelect={(currentValue) => {
+                    setValues(values.includes(currentValue) ? values.filter(value => currentValue !== value) : [...values, currentValue])
+                  }}
+                >
+                  <Check
+                    className={cn(
+                      "mr-2 h-4 w-4",
+                      values.includes(label) ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                  {label}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </Command>
+        </PopoverContent>
+      </Popover>
+      <div className="flex gap-1 flex-wrap">{values.map(value => {
+        return <Badge key={value}>{value}</Badge>
+      })}</div>
     </div>
-  );
+  )
 }

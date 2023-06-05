@@ -11,6 +11,7 @@ import { ModeToggle } from "@/components/theme/mode-toggle";
 import EmptyState from "./components/empty-state";
 import History from "@/components/feed/history";
 import { Button } from "@/components/ui/button";
+import { WaitlistDialog } from "@/components/waitlist/dialog";
 
 export const revalidate = 0;
 
@@ -25,7 +26,7 @@ export default async function Home() {
         <h1 className="font-bold text-3xl mb-6">evnt.sh</h1>
         <p className="text-muted-foreground max-w-md">Streamline the process of tracking and displaying updates, enabling collaboration and project management.</p>
         <div className="">
-          <Button>Get Started</Button>
+          <WaitlistDialog />
           <Button variant="link">Star on GitHub</Button>
         </div>
       </div>

@@ -22,7 +22,7 @@ export default function StatusForm({ defaultValue }: StatusFormProps) {
   const disabled = value === defaultValue;
   const router = useRouter();
 
-  const onClick = async () => {
+  const handleChange = async () => {
     await fetch("api/v1/states", {
       method: "PUT",
       headers: {
@@ -36,9 +36,16 @@ export default function StatusForm({ defaultValue }: StatusFormProps) {
     router.refresh();
   };
 
+  // TODO:!!!!
+  const onOpenChange = (value: boolean) => {
+    if (!value && !disabled) {
+      handleChange()
+    }
+  }
+
   return (
     <div className="grid gap-1.5">
-      <Select name="status" onValueChange={setValue} defaultValue={value}>
+      <Select onOpenChange={onOpenChange} name="status" onValueChange={setValue} defaultValue={value}>
         <SelectTrigger id="status">
           <SelectValue placeholder="Status" />
         </SelectTrigger>
@@ -50,9 +57,7 @@ export default function StatusForm({ defaultValue }: StatusFormProps) {
           ))}
         </SelectContent>
       </Select>
-      <Button variant="outline" onClick={onClick} disabled={disabled}>
-        Submit
-      </Button>
+
     </div>
   );
 }

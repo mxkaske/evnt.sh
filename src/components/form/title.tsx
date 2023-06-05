@@ -31,7 +31,7 @@ export default function TitleForm({ defaultValue }: TitleFormProps) {
 
   return (
     <div className="grid gap-1.5">
-      <Label htmlFor="title">Edit title</Label>
+      <Label htmlFor="title">Title</Label>
       <Input
         id="title"
         name="title"
