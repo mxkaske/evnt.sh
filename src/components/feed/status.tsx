@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
 import ActivityIcon from "../activity/activity-icon";
 import { formatDistanceStrict } from "date-fns";
+import ActivityUserAvatar from "../activity/activity-user-avatar";
 
 export default function Status({ event }: { event: EventData }) {
   return (
@@ -12,12 +13,7 @@ export default function Status({ event }: { event: EventData }) {
       </div>
       <div className="min-w-0 flex-1 py-0 flex">
         <div className="h-8 flex items-center mr-1">
-          <a href="#">
-            <Avatar className="h-6 w-6">
-              <AvatarImage src={event.user.avatar} alt={event.user.username} />
-              <AvatarFallback>{event.user.username.slice(0, 2)}</AvatarFallback>
-            </Avatar>
-          </a>
+          <ActivityUserAvatar user={event.user} />
         </div>
         <div className="text-sm leading-8 text-muted-foreground">
           <span className="mr-0.5">

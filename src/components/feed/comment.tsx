@@ -2,6 +2,7 @@ import { EventData } from "@/types/events";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import ActivityIcon from "../activity/activity-icon";
 import { formatDistanceStrict } from "date-fns";
+import ActivityUserAvatar from "../activity/activity-user-avatar";
 
 export default function Comment({ event }: { event: EventData }) {
   return (
@@ -12,17 +13,7 @@ export default function Comment({ event }: { event: EventData }) {
       <div className="min-w-0 flex-1 rounded-md border border-input p-2 -my-2 -ml-2">
         <div className="flex">
           <div className="h-8 flex items-center mr-1">
-            <a href="#">
-              <Avatar className="h-6 w-6">
-                <AvatarImage
-                  src={event.user.avatar}
-                  alt={event.user.username}
-                />
-                <AvatarFallback>
-                  {event.user.username.slice(0, 2)}
-                </AvatarFallback>
-              </Avatar>
-            </a>
+            <ActivityUserAvatar user={event.user} />
           </div>
           <div className="text-sm leading-7 text-muted-foreground">
             <span className="mr-0.5">

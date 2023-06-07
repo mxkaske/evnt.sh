@@ -12,10 +12,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { USERS } from "@/constants/users"
-import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from "react"
 
-function fallback(name: string) {
+function fallbackName(name: string) {
   return name.substring(0, 2).toUpperCase()
 }
 
@@ -54,7 +53,7 @@ export default function SwitchUser() {
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
             <AvatarImage src={activeUser.avatar} alt={activeUser.username} />
-            <AvatarFallback>{fallback(activeUser.username)}</AvatarFallback>
+            <AvatarFallback>{fallbackName(activeUser.username)}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
@@ -81,7 +80,7 @@ export default function SwitchUser() {
                 <Avatar className="mr-2 h-4 w-4">
                   <AvatarImage src={user.avatar} alt={user.username} />
                   {/* TODO: replace username with first 2 chars after @ */}
-                  <AvatarFallback>{fallback(user.username)}</AvatarFallback>
+                  <AvatarFallback>{fallbackName(user.username)}</AvatarFallback>
                 </Avatar>
                 <span>{user.username}</span>
               </DropdownMenuItem>
