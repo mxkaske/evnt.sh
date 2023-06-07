@@ -74,3 +74,21 @@ module.exports = {
   },
   plugins: [require("tailwindcss-animate")],
 };
+
+
+// REMINDER: as we are using `tailwindcss-animate`, no need for writing our custom plugin
+// const plugin = require('tailwindcss/plugin');
+// plugin(({ matchUtilities, theme }) => {
+//   matchUtilities(
+//     {
+//       "animation-delay": (value) => {
+//         return {
+//           "animation-delay": value,
+//         };
+//       },
+//     },
+//     {
+//       values: theme("transitionDelay"),
+//     }
+//   );
+// }),

@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { experimental_useFormStatus as useFormStatus } from 'react-dom';
 import { useEffect, useState } from "react";
+import { LoadingAnimation } from "./loading-animation";
 
 
 export function WaitlistSubmitButton({ close }: {
@@ -22,7 +23,6 @@ export function WaitlistSubmitButton({ close }: {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pending])
 
-  const text = pending ? "Subscribing..." : "Subscribe"
-  return <Button type="submit" disabled={pending}>{text}</Button>
+  return <Button type="submit" disabled={pending} className="w-20 disabled:opacity-100">{pending ? <LoadingAnimation /> : "Join"}</Button>
 
 }

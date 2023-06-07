@@ -1,8 +1,9 @@
 import { INITIAL_STATE } from "@/constants/state";
-import { createEvent } from "@/lib/events";
+import { createEvent, getUser } from "@/lib/events";
 import redis from "@/lib/redis";
 import { EventType } from "@/types/events";
 import { State } from "@/types/states";
+import { NextRequest } from "next/server";
 
 export const revalidate = 0;
 
@@ -33,10 +34,11 @@ export async function POST(request: Request) {
 }
 
 // TODO: fix labels array issue - ONLY last updated label will be displayed. doesnt matter deleted or created
-export async function PUT(request: Request) {
+export async function PUT(request: NextRequest) {
   const json = await request.json()
   const { type, data } = json as { type: EventType, data: string | number | string[] };
-  createEvent(type, { data });
+  const user = await getUser(request)
+  createEvent(type, { data }, user);
   const attribute = removeSuffixType(type);
   await redis.json.set("state", `$.${attribute}`, JSON.stringify(data));
   return new Response("Updated", {
