@@ -7,7 +7,7 @@ type Title = "title";
 type Status = "status";
 
 export type EventDeleteType = `${Labels}-delete`;
-export type EventCreateType = `${Labels | Comment}-create`;
+export type EventCreateType = `${Title | Labels | Comment}-create`;
 export type EventUpdateType = `${Title | Status}-update`;
 
 // OR:

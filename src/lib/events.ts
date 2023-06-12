@@ -3,6 +3,8 @@ import redis from "@/lib/redis";
 import { USERS } from "@/constants/users";
 import { NextRequest } from "next/server";
 
+const TTL = 60 * 60 * 24 * 7 // 7 days cache
+
 // TODO: rethink of logic
 export function createEventObject<T>(type: EventType, data: T, user: EventUserType) {
   const timestamp = new Date().getTime();
@@ -14,6 +16,7 @@ export function createEventObject<T>(type: EventType, data: T, user: EventUserTy
 export async function createEvent<T>(type: EventType, data: T, user: EventUserType) {
   const eventObj = createEventObject(type, data, user)
   const res = await redis.zadd("events", eventObj);
+  await redis.expire("events", TTL);
   return res;
 }
 
@@ -31,4 +34,8 @@ export async function getUser(request: NextRequest) {
   const user = userId && USERS.find(({ id }) => userId === id.toString()) || USERS[1];
   const { id, username, avatar } = user;
   return { id, username, avatar };
+}
+
+export function removeSuffixEventType(word: string) {
+  return word.replace(/-(create|update|delete)$/, '')
 }

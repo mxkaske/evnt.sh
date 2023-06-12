@@ -27,6 +27,8 @@ interface LabelFormProps {
   defaultValues?: string[];
 }
 
+// TODO: maybe use fancy multi select instead?
+
 export default function LabelForm({ defaultValues = [] }: LabelFormProps) {
   const [open, setOpen] = React.useState(false)
   const [values, setValues] = React.useState(defaultValues)
@@ -116,8 +118,8 @@ export default function LabelForm({ defaultValues = [] }: LabelFormProps) {
           </Command>
         </PopoverContent>
       </Popover>
-      <div className="flex gap-1 flex-wrap">{values.map(value => {
-        return <Badge key={value}>{value}</Badge>
+      <div className="flex gap-1 flex-wrap mt-2">{values.map(value => {
+        return <Badge key={value} variant="secondary">{value}</Badge>
       })}</div>
     </div>
   )

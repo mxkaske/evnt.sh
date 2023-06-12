@@ -13,10 +13,13 @@ import History from "@/components/feed/history";
 import { Button } from "@/components/ui/button";
 import { WaitlistDialog } from "@/components/waitlist/dialog";
 import SwitchUser from "@/components/feed/switch-user";
+import { cookies } from "next/headers";
 
 export const revalidate = 0;
 
 export default async function Home() {
+  const cookieList = cookies();
+  // console.log(cookieList)
   const eventsRes = await fetch(`${BASE_URL}/api/v1/events`);
   const stateRes = await fetch(`${BASE_URL}/api/v1/states`);
   const events = (await eventsRes.json()) as EventData[];
@@ -26,13 +29,13 @@ export default async function Home() {
     <main className="min-h-screen container max-w-5xl mx-auto flex flex-col py-4 md:py-8 px-3 md:px-6 space-y-8">
       <header className="flex items-center justify-between space-x-4">
         <h1 className="font-bold text-3xl blur-md">evnt.sh</h1>
-        {/* Hmm, not convinced. we will need a user to create */}
         {isEmpty ? null : <SwitchUser />}
       </header>
       <div>
         <p className="text-muted-foreground max-w-md mb-4">Streamline the process of tracking and displaying updates, enabling collaboration and project management.</p>
         <div className="space-x-2">
           <WaitlistDialog />
+          {/* TODO: move to Client Component for onClick */}
           <Button variant="link">Star on GitHub</Button>
         </div>
       </div>

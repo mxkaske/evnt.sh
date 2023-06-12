@@ -36,7 +36,7 @@ export default function CommentForm() {
           className="block w-full resize-none border-0 bg-transparent py-2 px-3 placeholder:text-muted-foreground focus:outline-none sm:text-sm sm:leading-6"
           placeholder="Add your comment..."
           onChange={(e) => setValue(e.target.value)}
-          defaultValue={value}
+          value={value}
         />
       </div>
       <div className="absolute left-0 bottom-0 flex justify-between py-2 px-3">

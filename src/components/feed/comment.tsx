@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import ActivityIcon from "../activity/activity-icon";
 import { formatDistanceStrict } from "date-fns";
 import ActivityUserAvatar from "../activity/activity-user-avatar";
+import ActivityUserName from "../activity/activity-user-name";
 
 export default function Comment({ event }: { event: EventData }) {
   return (
@@ -17,9 +18,7 @@ export default function Comment({ event }: { event: EventData }) {
           </div>
           <div className="text-sm leading-7 text-muted-foreground">
             <span className="mr-0.5">
-              <a href="#" className="font-medium text-foreground">
-                {event.user.username}
-              </a>{" "}
+              <ActivityUserName user={event.user} />{" "}
               commented
             </span>{" "}
             <span className="whitespace-nowrap">

@@ -7,7 +7,9 @@ export const revalidate = 0;
 
 type Slug = string | string[] | undefined
 
-function createEventKey(slug:Slug) {
+// Normally only POST and PUT request are allowed!
+
+function createEventKey(slug: Slug) {
   return slug ? ["events", ...(Array.isArray(slug) ? slug : [slug])].join(":") : "events"
 }
 

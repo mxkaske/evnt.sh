@@ -28,7 +28,8 @@ export default function EmptyState() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        title: value
+        type: "title-create",
+        data: value,
       }),
     });
     router.refresh();

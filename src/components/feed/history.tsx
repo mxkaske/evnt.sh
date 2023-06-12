@@ -9,6 +9,7 @@ export default function History({ events }: { events: EventData[] }) {
     <div className="flow-root mb-8">
       <ul role="list" className="-mb-8">
         {/* move to components/activity */}
+        {/* do we want to filter "title-create" event? */}
         {events.map((event, i) => {
           function renderEvent() {
             if (

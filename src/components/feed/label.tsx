@@ -1,9 +1,9 @@
 import { EventData, EventType } from "@/types/events";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
 import ActivityIcon from "../activity/activity-icon";
 import { formatDistanceStrict } from "date-fns";
 import ActivityUserAvatar from "../activity/activity-user-avatar";
+import ActivityUserName from "../activity/activity-user-name";
 
 export default function Label({
   event,
@@ -13,6 +13,7 @@ export default function Label({
   type: EventType;
 }) {
   const data = event[type].data;
+  // Ask about tweet?!? function literal
   const isMultiple = Array.isArray(data) && data.length > 1;
   const text = `${event.type === "labels-create" ? "added tag" : "removed tag"}${isMultiple ? "s" : ""
     }`;
@@ -27,9 +28,7 @@ export default function Label({
         </div>
         <div className="text-sm leading-7 text-muted-foreground">
           <span className="mr-0.5">
-            <a href="#" className="font-medium text-foreground">
-              {event.user.username}
-            </a>{" "}
+            <ActivityUserName user={event.user} />{" "}
             {text}
           </span>{" "}
           {/* TODO: check if space-x-* is working */}
