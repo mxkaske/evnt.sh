@@ -1,52 +1,42 @@
-import { EventData } from "@/types/events";
 import Label from "./label";
 import Status from "./status";
 import Title from "./title";
 import Comment from "./comment";
+import { BASE_URL } from "@/constants/fetch";
+import { TinyData } from "@/lib/tinybird";
 
-export default function History({ events }: { events: EventData[] }) {
+export default async function History() {
+  const tinyRes = await fetch(`${BASE_URL}/api/v1/tinybird`);
+  const tiny = (await tinyRes.json()) as { data: TinyData[] };
+  console.log({ tiny });
   return (
     <div className="flow-root mb-8">
       <ul role="list" className="-mb-8">
         {/* move to components/activity */}
-        {/* do we want to filter "title-create" event? */}
-        {events.map((event, i) => {
+        {/* OPTIMIZE?!? */}
+        {tiny?.data?.map((event, i) => {
+          const key = event.timestamp;
           function renderEvent() {
-            if (
-              !Array.isArray(event.type) &&
-              event.type.startsWith("labels-")
-            ) {
-              return (
-                <Label
-                  key={event.timestamp}
-                  type={event.type}
-                  {...{ event }}
-                />
-              );
+            if (!Array.isArray(event.name) && event.name.startsWith("labels")) {
+              return <Label key={key} {...event} />;
+            }
+            if (!Array.isArray(event.name) && event.name.startsWith("status")) {
+              return <Status key={key} {...event} />;
+            }
+            if (!Array.isArray(event.name) && event.name.startsWith("title")) {
+              return <Title key={key} {...event} />;
             }
             if (
-              !Array.isArray(event.type) &&
-              event.type.startsWith("status-")
+              !Array.isArray(event.name) &&
+              event.name.startsWith("comment")
             ) {
-              return <Status key={event.timestamp} {...{ event }} />;
-            }
-            if (
-              !Array.isArray(event.type) &&
-              event.type.startsWith("title-")
-            ) {
-              return <Title key={event.timestamp} {...{ event }} />;
-            }
-            if (
-              !Array.isArray(event.type) &&
-              event.type.startsWith("comment-")
-            ) {
-              return <Comment key={event.timestamp} {...{ event }} />;
+              return <Comment key={key} {...event} />;
             }
           }
           return (
-            <li key={event.timestamp}>
+            <li key={key}>
               <div className="relative pb-8">
-                {i !== events.length - 1 ? (
+                {i !== tiny.data.length - 1 ? (
                   <span
                     className="absolute left-5 top-5 -ml-px h-full w-0.5 bg-accent"
                     aria-hidden="true"
@@ -59,5 +49,5 @@ export default function History({ events }: { events: EventData[] }) {
         })}
       </ul>
     </div>
-  )
+  );
 }

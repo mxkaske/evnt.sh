@@ -22,14 +22,26 @@ export default function EmptyState() {
   const disabled = value === ""
 
   const onClick = async () => {
-    await fetch("api/v1/states", {
+    await fetch("api/v1/upstash", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        type: "title-create",
-        data: value,
+        title: value,
+        status: "Ready",
+        labels: [],
+      }),
+    });
+    await fetch("api/v1/tinybird", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        method: "create",
+        name: "title",
+        value,
       }),
     });
     router.refresh();

@@ -12,14 +12,16 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-``
+} from "@/components/ui/alert-dialog";
+
 export default function DeleteButton() {
   const router = useRouter();
 
   const onClick = async () => {
-    await fetch(`/api/v1/events`, { method: "DELETE" });
-    await fetch(`/api/v1/states`, { method: "DELETE" })
+    await fetch(`/api/v1/upstash`, { method: "DELETE" });
+    await fetch(`/api/v1/tinybird`, { method: "DELETE" });
+    await fetch(`/api/v1/upstash/comments`, { method: "DELETE" });
+    await fetch(`/api/v1/tinybird/comments`, { method: "DELETE" });
     router.refresh();
   };
 
@@ -34,7 +36,8 @@ export default function DeleteButton() {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently reset all the data.
+            This action cannot be undone. This will permanently reset all the
+            data.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

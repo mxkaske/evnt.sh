@@ -16,14 +16,25 @@ export default function TitleForm({ defaultValue }: TitleFormProps) {
   const disabled = value === defaultValue;
 
   const onClick = async () => {
-    await fetch("api/v1/states", {
+    await fetch("api/v1/upstash", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        type: "title-update",
-        data: value
+        name: "title",
+        value
+      }),
+    });
+    await fetch("api/v1/tinybird", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        method: "update",
+        name: "title",
+        value
       }),
     });
     router.refresh();

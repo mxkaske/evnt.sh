@@ -1,22 +1,18 @@
-import { EventData, EventType } from "@/types/events";
 import { Badge } from "../ui/badge";
 import ActivityIcon from "../activity/activity-icon";
 import { formatDistanceStrict } from "date-fns";
 import ActivityUserAvatar from "../activity/activity-user-avatar";
 import ActivityUserName from "../activity/activity-user-name";
+import { TinyData } from "@/lib/tinybird";
+import { USERS } from "@/constants/users";
 
-export default function Label({
-  event,
-  type,
-}: {
-  event: EventData;
-  type: EventType;
-}) {
-  const data = event[type].data;
-  // Ask about tweet?!? function literal
-  const isMultiple = Array.isArray(data) && data.length > 1;
-  const text = `${event.type === "labels-create" ? "added tag" : "removed tag"}${isMultiple ? "s" : ""
+export default function Label({ value, method, user_id, timestamp }: TinyData) {
+  // probably create array from value
+  const isMultiple = Array.isArray(value) && value.length > 1;
+  const text = `${method === "create" ? "added tag" : "removed tag"}${isMultiple ? "s" : ""
     }`;
+  const user = USERS.find((user) => user.id === Number(user_id)) || USERS[1];
+  const data = JSON.parse(`${value}`);
   return (
     <div className="relative flex items-start space-x-3">
       <div className="relative px-1">
@@ -24,12 +20,11 @@ export default function Label({
       </div>
       <div className="min-w-0 flex-1 py-0 flex">
         <div className="h-8 flex items-center mr-1">
-          <ActivityUserAvatar user={event.user} />
+          <ActivityUserAvatar user={user} />
         </div>
         <div className="text-sm leading-7 text-muted-foreground">
           <span className="mr-0.5">
-            <ActivityUserName user={event.user} />{" "}
-            {text}
+            <ActivityUserName user={user} /> {text}
           </span>{" "}
           {/* TODO: check if space-x-* is working */}
           <span className="mr-0.5 space-x-0.5">
@@ -41,12 +36,12 @@ export default function Label({
               ))
             ) : (
               <a href="#">
-                <Badge variant="outline">{data}</Badge>
+                <Badge variant="outline">{`${data}`}</Badge>
               </a>
             )}{" "}
           </span>
           <span className="whitespace-nowrap">
-            {formatDistanceStrict(new Date(event.timestamp), new Date())} ago
+            {formatDistanceStrict(new Date(timestamp), new Date())} ago
           </span>
         </div>
       </div>

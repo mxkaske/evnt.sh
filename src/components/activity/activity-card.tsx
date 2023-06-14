@@ -13,7 +13,7 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function ActivityCard({ timestamp }: ActivityCarProps) {
   const { data, error, isLoading } = useSWR<State>(
-    `/api/v1/states?timestamp=${timestamp}`, // REMINDER: currently, no timestamp
+    `/api/v1/upstash?timestamp=${timestamp}`, // REMINDER: currently, no timestamp
     fetcher
   );
 

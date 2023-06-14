@@ -10,7 +10,7 @@ export async function GET(request: Request) {
     topic: TOPIC,
     partition: 0,
     // REMINDER: because we are only storing data for a day, need to update it each time - otherwise throws `UpstashError: Fetch position FetchPosition`
-    offset: 9, // offset is the data number
+    offset: 25, // offset is the data number
     timeout: 1000,
   });
   console.log(res);

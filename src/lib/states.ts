@@ -1,13 +1,15 @@
 import { INITIAL_STATE } from "@/constants/state";
 import { EventData } from "@/types/events";
 
+// DELETE?
+
 // const events = timestamp
 // ? await redis.zrange<EventData[]>("events", 0, Number(timestamp), {
 //     byScore: true,
 //   })
 // : await redis.zrange<EventData[]>("events", 0, -1);
 
-export function getCurrentState(events:EventData[]) {
+export function getCurrentState(events: EventData[]) {
   const state = INITIAL_STATE;
   // FIXME: hotfix avoids the duplicates - should be deleted?!?
   state.labels = [];
@@ -36,5 +38,5 @@ export function getCurrentState(events:EventData[]) {
       }
     }
   });
-  return state
+  return state;
 }

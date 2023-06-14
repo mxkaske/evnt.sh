@@ -39,28 +39,39 @@ export default function LabelForm({ defaultValues = [] }: LabelFormProps) {
   const handleChange = async () => {
     const added = values.filter((label) => !defaultValues?.includes(label));
     const removed = defaultValues?.filter((label) => !values?.includes(label));
-    // FIXME: currently always added because defaultValues seem to be falsy
+    await fetch("api/v1/upstash", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: "labels",
+        value: values
+      }),
+    });
     if (added.length > 0) {
-      await fetch("api/v1/states", {
-        method: "PUT",
+      await fetch("api/v1/tinybird", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          type: "labels-create",
-          data: added
+          method: "create",
+          name: "labels",
+          value: added
         }),
       });
     }
     if (removed.length > 0) {
-      await fetch("api/v1/states", {
-        method: "PUT",
+      await fetch("api/v1/tinybird", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          type: "labels-delete",
-          data: removed
+          method: "delete",
+          name: "labels",
+          value: removed
         }),
       });
     }

@@ -11,16 +11,28 @@ export default function CommentForm() {
   const disabled = value === "";
 
   const onClick = async () => {
-    await fetch("api/v1/comments", {
-      method: "POST",
+    const timestamp = Date.now();
+    await fetch("api/v1/upstash/comments", {
+      method: "PUT",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        type: "comment-create",
-        data: value
-      })
-    })
+        name: timestamp,
+        value,
+      }),
+    });
+    await fetch("api/v1/tinybird/comments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        method: "create",
+        name: "comment",
+        value,
+      }),
+    });
     setValue("");
     router.refresh(); // seems to no reset the value..
   };

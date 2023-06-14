@@ -1,11 +1,14 @@
-import { EventData } from "@/types/events";
 import ActivityIcon from "../activity/activity-icon";
 import { formatDistanceStrict } from "date-fns";
 import ActivityUserAvatar from "../activity/activity-user-avatar";
 import ActivityUserName from "../activity/activity-user-name";
+import { TinyData } from "@/lib/tinybird";
+import { USERS } from "@/constants/users";
 
-export default function Title({ event }: { event: EventData }) {
-  const text = `${event.type === "title-create" ? "created" : "updated"} title`
+export default function Title({ method, value, user_id, timestamp }: TinyData) {
+  const text = `${method === "create" ? "created" : "updated"} title`;
+  const user = USERS.find((user) => user.id === Number(user_id)) || USERS[1];
+  const data = JSON.parse(`${value}`);
   return (
     <div className="relative flex items-start space-x-3">
       <div className="relative px-1">
@@ -13,18 +16,15 @@ export default function Title({ event }: { event: EventData }) {
       </div>
       <div className="min-w-0 flex-1 py-0 flex">
         <div className="h-8 flex items-center mr-1">
-          <ActivityUserAvatar user={event.user} />
+          <ActivityUserAvatar user={user} />
         </div>
         <div className="text-sm leading-7 text-muted-foreground">
           <span className="mr-0.5">
-            <ActivityUserName user={event.user} />{" "}
-            {text}
+            <ActivityUserName user={user} /> {text}
           </span>{" "}
-          <span className="mr-0.5 font-semibold text-foreground">
-            {!Array.isArray(event.type) && event[event.type].data}
-          </span>{" "}
+          <span className="mr-0.5 font-semibold text-foreground">{data}</span>{" "}
           <span className="whitespace-nowrap">
-            {formatDistanceStrict(new Date(event.timestamp), new Date())} ago
+            {formatDistanceStrict(new Date(timestamp), new Date())} ago
           </span>
         </div>
       </div>

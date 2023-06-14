@@ -14,17 +14,18 @@ import { Button } from "@/components/ui/button";
 import { WaitlistDialog } from "@/components/waitlist/dialog";
 import SwitchUser from "@/components/feed/switch-user";
 import { cookies } from "next/headers";
+import { TinyData } from "@/lib/tinybird";
 
 export const revalidate = 0;
 
 export default async function Home() {
   const cookieList = cookies();
-  // console.log(cookieList)
-  const eventsRes = await fetch(`${BASE_URL}/api/v1/events`);
-  const stateRes = await fetch(`${BASE_URL}/api/v1/states`);
-  const events = (await eventsRes.json()) as EventData[];
+  const stateRes = await fetch(`${BASE_URL}/api/v1/upstash`);
   const state = (await stateRes.json()) as State | undefined;
-  const isEmpty = !state
+  const tinyRes = await fetch(`${BASE_URL}/api/v1/tinybird`);
+  const tiny = await tinyRes.json() as TinyData[]
+  const isEmpty = !(tiny && state)
+  console.log({ tiny, state })
   return (
     <main className="min-h-screen container max-w-5xl mx-auto flex flex-col py-4 md:py-8 px-3 md:px-6 space-y-8">
       <header className="flex items-center justify-between space-x-4">
@@ -46,16 +47,17 @@ export default async function Home() {
           <div className="grid md:grid-cols-3 gap-12 w-full">
             <div className="col-span-1 md:col-span-2">
               <p className="text-sm text-muted-foreground mb-4">Activity Feed</p>
-              {events.length > 0 ? <History events={events} /> : null}
+              {/* @ts-ignore async component */}
+              <History />
               <CommentForm />
             </div>
             <div className="col-span-1">
               <p className="text-sm text-muted-foreground mb-4">Current State</p>
-              <TitleForm defaultValue={state.title || undefined} />
+              <TitleForm defaultValue={state?.title} />
               <Separator className="my-4" />
-              <LabelForm defaultValues={state.labels || undefined} />
+              <LabelForm defaultValues={state?.labels} />
               <Separator className="my-4" />
-              <StatusForm defaultValue={state.status || undefined} />
+              <StatusForm defaultValue={state?.status} />
               <Separator className="my-4" />
               <div className="w-full text-right">
                 <DeleteButton />

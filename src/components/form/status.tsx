@@ -25,14 +25,25 @@ export default function StatusForm({ defaultValue }: StatusFormProps) {
 
   useEffect(() => {
     const handleChange = async () => {
-      await fetch("api/v1/states", {
+      await fetch("api/v1/upstash", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          type: "status-update",
-          data: value
+          name: "status",
+          value
+        }),
+      });
+      await fetch("api/v1/tinybird", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          method: "update",
+          name: "status",
+          value
         }),
       });
       router.refresh();
