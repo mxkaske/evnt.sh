@@ -1,4 +1,3 @@
-import { EventUserType } from "@/types/events";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
   HoverCard,
@@ -6,13 +5,9 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { CalendarDays } from "lucide-react";
-import { USERS } from "@/constants/users";
+import { USERS, User } from "@/constants/users";
 
-interface ActivityUserProps {
-  user: EventUserType; // EventData["user"]
-}
-
-export default function ActivityUserName({ user }: ActivityUserProps) {
+export default function ActivityUserName({ user }: { user: User }) {
   const data = USERS.find(({ id }) => user.id === id);
   return (
     <HoverCard>
@@ -25,13 +20,13 @@ export default function ActivityUserName({ user }: ActivityUserProps) {
         <div className="flex justify-between space-x-4">
           <Avatar>
             <AvatarImage src={user.avatar} />
-            <AvatarFallback>{user.username.substring(0, 2).toUpperCase()}</AvatarFallback>
+            <AvatarFallback>
+              {user.username.substring(0, 2).toUpperCase()}
+            </AvatarFallback>
           </Avatar>
           <div className="space-y-1">
             <h4 className="text-sm font-semibold">@{user.username}</h4>
-            <p className="text-sm">
-              {data?.description}
-            </p>
+            <p className="text-sm">{data?.description}</p>
             <div className="flex items-center pt-2">
               <CalendarDays className="mr-2 h-4 w-4 opacity-70" />{" "}
               <span className="text-xs text-muted-foreground">

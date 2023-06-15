@@ -32,8 +32,8 @@ export const POST = async (
 ) => {
   // auth - move into differen folder?
   const cookiesList = req.cookies;
-  const hasId = cookiesList.has("id");
-  const userId = (hasId && cookiesList.get("id")?.value) || "1";
+  const hasId = cookiesList.has("userId");
+  const userId = (hasId && cookiesList.get("userId")?.value) || "1";
   //
   const json = await req.json();
   const body = bodySchema.safeParse(json);
@@ -45,6 +45,7 @@ export const POST = async (
   return new Response("OK", { status: 200 });
 };
 
+// TODO: check
 export const DELETE = async (_: Request, { params }: { params: Params }) => {
   const key = createKey(params.slug);
   await deleteEvents(key);

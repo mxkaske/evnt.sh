@@ -20,8 +20,8 @@ export default function DeleteButton() {
   const onClick = async () => {
     await fetch(`/api/v1/upstash`, { method: "DELETE" });
     await fetch(`/api/v1/tinybird`, { method: "DELETE" });
+    await fetch(`/api/v1/tinybird/comments`, { method: "DELETE" }); // seems not to work
     await fetch(`/api/v1/upstash/comments`, { method: "DELETE" });
-    await fetch(`/api/v1/tinybird/comments`, { method: "DELETE" });
     router.refresh();
   };
 

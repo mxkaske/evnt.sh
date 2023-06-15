@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,25 +10,25 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { USERS } from "@/constants/users"
-import { useEffect, useState } from "react"
+} from "@/components/ui/dropdown-menu";
+import { USERS } from "@/constants/users";
+import { useEffect, useState } from "react";
 
 function fallbackName(name: string) {
-  return name.substring(0, 2).toUpperCase()
+  return name.substring(0, 2).toUpperCase();
 }
 
 function setCookie(id: number) {
   if (document) {
     let expires = new Date();
-    expires.setTime(expires.getTime() + (24 * 60 * 60 * 1000)); // expires in one day
-    document.cookie = `id=${id}; expires=${expires}; path=/`
+    expires.setTime(expires.getTime() + 24 * 60 * 60 * 1000); // expires in one day
+    document.cookie = `userId=${id}; expires=${expires}; path=/`;
   }
 }
 
 function getCookieId() {
   if (document) {
-    const regex = /id=(\d+)/;
+    const regex = /userId=(\d+)/;
     const match = document.cookie.match(regex);
     if (match) {
       return match[1];
@@ -43,9 +43,8 @@ export default function SwitchUser() {
 
   useEffect(() => {
     const id = getCookieId();
-    console.log(id)
-    setActiveUser(USERS.find((user) => user.id === Number(id)) || USERS[1])
-  }, [])
+    setActiveUser(USERS.find((user) => user.id === Number(id)) || USERS[1]);
+  }, []);
 
   return (
     <DropdownMenu>
@@ -60,7 +59,9 @@ export default function SwitchUser() {
       <DropdownMenuContent align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">@{activeUser.username}</p>
+            <p className="text-sm font-medium leading-none">
+              @{activeUser.username}
+            </p>
             <p className="text-xs leading-none text-muted-foreground">
               Select a different user
             </p>
@@ -84,10 +85,10 @@ export default function SwitchUser() {
                 </Avatar>
                 <span>{user.username}</span>
               </DropdownMenuItem>
-            )
+            );
           })}
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

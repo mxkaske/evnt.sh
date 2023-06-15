@@ -4,8 +4,9 @@ import Title from "./title";
 import Comment from "./comment";
 import { BASE_URL } from "@/constants/fetch";
 import { TinyData } from "@/lib/tinybird";
+import { asyncComponent } from "@/lib/hack";
 
-export default async function History() {
+async function History() {
   const tinyRes = await fetch(`${BASE_URL}/api/v1/tinybird`);
   const tiny = (await tinyRes.json()) as { data: TinyData[] };
   console.log({ tiny });
@@ -51,3 +52,5 @@ export default async function History() {
     </div>
   );
 }
+
+export default asyncComponent(History);

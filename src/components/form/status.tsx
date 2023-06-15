@@ -22,7 +22,6 @@ export default function StatusForm({ defaultValue }: StatusFormProps) {
   const disabled = value === defaultValue;
   const router = useRouter();
 
-
   useEffect(() => {
     const handleChange = async () => {
       await fetch("api/v1/upstash", {
@@ -32,7 +31,7 @@ export default function StatusForm({ defaultValue }: StatusFormProps) {
         },
         body: JSON.stringify({
           name: "status",
-          value
+          value,
         }),
       });
       await fetch("api/v1/tinybird", {
@@ -43,17 +42,16 @@ export default function StatusForm({ defaultValue }: StatusFormProps) {
         body: JSON.stringify({
           method: "update",
           name: "status",
-          value
+          value,
         }),
       });
       router.refresh();
-    }
+    };
 
     if (!disabled) {
       handleChange();
     }
-  }, [disabled, router, value])
-
+  }, [disabled, router, value]);
 
   return (
     <div className="grid gap-1.5">
@@ -69,7 +67,6 @@ export default function StatusForm({ defaultValue }: StatusFormProps) {
           ))}
         </SelectContent>
       </Select>
-
     </div>
   );
 }

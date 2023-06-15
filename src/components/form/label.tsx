@@ -2,26 +2,32 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
-import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
-import { LABELS } from "@/constants/state";
-import * as React from "react"
-import { Check, ChevronsUpDown } from "lucide-react"
+import * as React from "react";
+import { Check, ChevronsUpDown } from "lucide-react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
+
+export const LABELS = [
+  "bug",
+  "documentation",
+  "duplicate",
+  "enhancement",
+  "question",
+];
 
 interface LabelFormProps {
   defaultValues?: string[];
@@ -30,8 +36,8 @@ interface LabelFormProps {
 // TODO: maybe use fancy multi select instead?
 
 export default function LabelForm({ defaultValues = [] }: LabelFormProps) {
-  const [open, setOpen] = React.useState(false)
-  const [values, setValues] = React.useState(defaultValues)
+  const [open, setOpen] = React.useState(false);
+  const [values, setValues] = React.useState(defaultValues);
   const router = useRouter();
   //   const disabled =
   //     JSON.stringify(values.sort()) === JSON.stringify(defaultValues.sort());
@@ -46,7 +52,7 @@ export default function LabelForm({ defaultValues = [] }: LabelFormProps) {
       },
       body: JSON.stringify({
         name: "labels",
-        value: values
+        value: values,
       }),
     });
     if (added.length > 0) {
@@ -58,7 +64,7 @@ export default function LabelForm({ defaultValues = [] }: LabelFormProps) {
         body: JSON.stringify({
           method: "create",
           name: "labels",
-          value: added
+          value: added,
         }),
       });
     }
@@ -71,21 +77,20 @@ export default function LabelForm({ defaultValues = [] }: LabelFormProps) {
         body: JSON.stringify({
           method: "delete",
           name: "labels",
-          value: removed
+          value: removed,
         }),
       });
     }
     router.refresh();
-  }
+  };
 
   const onOpenChange = (value: boolean) => {
     // && !disabled
     if (!value) {
-      handleChange()
+      handleChange();
     }
-    setOpen(value)
-  }
-
+    setOpen(value);
+  };
 
   return (
     <div className="grid gap-1.5">
@@ -98,9 +103,9 @@ export default function LabelForm({ defaultValues = [] }: LabelFormProps) {
             aria-expanded={open}
             className="w-full justify-between line-clamp-1"
           >
-            <span className="truncate">{values.length > 0
-              ? values.join(", ")
-              : "Select label..."}</span>
+            <span className="truncate">
+              {values.length > 0 ? values.join(", ") : "Select label..."}
+            </span>
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
@@ -113,7 +118,11 @@ export default function LabelForm({ defaultValues = [] }: LabelFormProps) {
                 <CommandItem
                   key={label}
                   onSelect={(currentValue) => {
-                    setValues(values.includes(currentValue) ? values.filter(value => currentValue !== value) : [...values, currentValue])
+                    setValues(
+                      values.includes(currentValue)
+                        ? values.filter((value) => currentValue !== value)
+                        : [...values, currentValue]
+                    );
                   }}
                 >
                   <Check
@@ -129,9 +138,15 @@ export default function LabelForm({ defaultValues = [] }: LabelFormProps) {
           </Command>
         </PopoverContent>
       </Popover>
-      <div className="flex gap-1 flex-wrap mt-2">{values.map(value => {
-        return <Badge key={value} variant="secondary">{value}</Badge>
-      })}</div>
+      <div className="flex gap-1 flex-wrap mt-2">
+        {values.map((value) => {
+          return (
+            <Badge key={value} variant="secondary">
+              {value}
+            </Badge>
+          );
+        })}
+      </div>
     </div>
-  )
+  );
 }
