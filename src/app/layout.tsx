@@ -23,7 +23,7 @@ export default function RootLayout({
       ) : undefined}
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <BG>{children}</BG>
+          {children}
         </ThemeProvider>
       </body>
     </html>

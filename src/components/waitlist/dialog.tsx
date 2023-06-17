@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -9,19 +9,23 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { WaitlistSubmitButton } from "./submit-button"
-import { WaitlistForm } from "./form"
-import { useState } from "react"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { WaitlistSubmitButton } from "./submit-button";
+import { WaitlistForm } from "./form";
+import { useState } from "react";
 
 export function WaitlistDialog() {
   const [open, setOpen] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
 
   if (subscribed) {
-    return <Button variant="outline" disabled>Subscribed!</Button>
+    return (
+      <Button variant="outline" disabled>
+        Subscribed!
+      </Button>
+    );
   }
 
   return (
@@ -35,6 +39,10 @@ export function WaitlistDialog() {
             <DialogTitle>Join waitlist</DialogTitle>
             <DialogDescription>
               Sign up to the waiting list and stay updated.
+              <br />
+              <span className="text-muted-foreground text-xs">
+                Your email will be stored without getting a confirmation email.
+              </span>
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
@@ -42,17 +50,26 @@ export function WaitlistDialog() {
               <Label htmlFor="email" className="text-right">
                 Email
               </Label>
-              <Input required id="email" name="email" placeholder="me@domain.com" type="email" className="col-span-3" />
+              <Input
+                required
+                id="email"
+                name="email"
+                placeholder="me@domain.com"
+                type="email"
+                className="col-span-3"
+              />
             </div>
           </div>
           <DialogFooter>
-            <WaitlistSubmitButton close={() => {
-              setOpen(false);
-              setSubscribed(true);
-            }} />
+            <WaitlistSubmitButton
+              close={() => {
+                setOpen(false);
+                setSubscribed(true);
+              }}
+            />
           </DialogFooter>
         </WaitlistForm>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
