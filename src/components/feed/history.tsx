@@ -9,7 +9,6 @@ import { asyncComponent } from "@/lib/hack";
 async function History() {
   const tinyRes = await fetch(`${BASE_URL}/api/v1/tinybird`);
   const tiny = (await tinyRes.json()) as { data: TinyData[] };
-  console.log({ tiny });
   return (
     <div className="flow-root mb-8">
       <ul role="list" className="-mb-8">

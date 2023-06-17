@@ -1,13 +1,13 @@
 import { Badge } from "../ui/badge";
 import ActivityIcon from "../activity/activity-icon";
-import { formatDistanceStrict } from "date-fns";
+import { formatDistance } from "date-fns";
 import ActivityUserAvatar from "../activity/activity-user-avatar";
 import ActivityUserName from "../activity/activity-user-name";
 import { TinyData } from "@/lib/tinybird";
 import { USERS } from "@/constants/users";
 
 export default function Status({ user_id, value, timestamp }: TinyData) {
-  const user = USERS.find((user) => user.id === Number(user_id)) || USERS[1]
+  const user = USERS.find((user) => user.id === Number(user_id)) || USERS[1];
   const data = JSON.parse(`${value}`);
   return (
     <div className="relative flex items-start space-x-3">
@@ -20,18 +20,15 @@ export default function Status({ user_id, value, timestamp }: TinyData) {
         </div>
         <div className="text-sm leading-8 text-muted-foreground">
           <span className="mr-0.5">
-            <ActivityUserName user={user} />{" "}
-            updated status
+            <ActivityUserName user={user} /> updated status
           </span>{" "}
           <span className="mr-0.5">
             <a href="#">
-              <Badge variant="outline">
-                {data}
-              </Badge>
+              <Badge variant="outline">{data}</Badge>
             </a>{" "}
           </span>
           <span className="whitespace-nowrap">
-            {formatDistanceStrict(new Date(timestamp), new Date())} ago
+            {formatDistance(new Date(timestamp), new Date())} ago
           </span>
         </div>
       </div>

@@ -3,7 +3,7 @@ import { Body } from "./validation";
 
 type Event = Body & Record<"user_id" | "id", string>;
 
-export async function createEvent({ value, ...rest }: Event) {
+export async function createEvent({ value, metadata, ...rest }: Event) {
   // const timestamp = new Date(Date.now()).toISOString(); // timezone compatible
   const timestamp = Date.now(); // Unix epoch
   const res = fetch("https://api.tinybird.co/v0/events?name=events_example", {
@@ -11,6 +11,7 @@ export async function createEvent({ value, ...rest }: Event) {
     body: JSON.stringify({
       timestamp,
       value: JSON.stringify(value),
+      metadata: metadata ? JSON.stringify(metadata) : null,
       ...rest,
     }),
     headers: {
@@ -37,6 +38,17 @@ export async function deleteEvents(key: string) {
     `https://api.tinybird.co/v0/datasources/events_example/delete?delete_condition=(id='${key}')`,
     {
       method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.TINYBIRD_TOKEN}`,
+      },
+    }
+  );
+}
+
+export async function getState(key: string) {
+  return await fetch(
+    `https://api.tinybird.co/v0/pipes/state_pipe.json?key=${key}`,
+    {
       headers: {
         Authorization: `Bearer ${process.env.TINYBIRD_TOKEN}`,
       },

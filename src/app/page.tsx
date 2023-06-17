@@ -1,6 +1,3 @@
-import LabelForm from "@/components/form/label";
-import StatusForm from "@/components/form/status";
-import TitleForm from "@/components/form/title";
 import CommentForm from "@/components/form/comment";
 import { Separator } from "@/components/ui/separator";
 import DeleteButton from "./components/delete-button";
@@ -14,6 +11,7 @@ import SwitchUser from "@/components/feed/switch-user";
 import { cookies } from "next/headers";
 import { TinyData } from "@/lib/tinybird";
 import { UpstashData } from "@/lib/upstash";
+import ParentForm from "@/components/form/parent-form";
 
 export const revalidate = 0;
 
@@ -24,7 +22,7 @@ export default async function Home() {
   const tinyRes = await fetch(`${BASE_URL}/api/v1/tinybird`);
   const tiny = (await tinyRes.json()) as TinyData[];
   const isEmpty = !(tiny && state);
-  console.log({ tiny, state });
+  // console.log({ tiny, state });
   return (
     <main className="min-h-screen container max-w-5xl mx-auto flex flex-col py-4 md:py-8 px-3 md:px-6 space-y-8">
       <header className="flex items-center justify-between space-x-4">
@@ -60,12 +58,8 @@ export default async function Home() {
               <p className="text-sm text-muted-foreground mb-4">
                 Current State
               </p>
-              <TitleForm defaultValue={state?.title} />
-              <Separator className="my-4" />
-              <LabelForm defaultValues={state?.labels} />
-              <Separator className="my-4" />
-              <StatusForm defaultValue={state?.status} />
-              <Separator className="my-4" />
+              <ParentForm />
+              <Separator className="my-6" />
               <div className="w-full text-right">
                 <DeleteButton />
               </div>

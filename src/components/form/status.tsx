@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import { useEffect, useState } from "react";
+import { Label } from "@/components/ui/label";
 
 const STATUS = ["Ready", "In progress", "Done"];
 
@@ -24,16 +25,6 @@ export default function StatusForm({ defaultValue }: StatusFormProps) {
 
   useEffect(() => {
     const handleChange = async () => {
-      await fetch("api/v1/upstash", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: "status",
-          value,
-        }),
-      });
       await fetch("api/v1/tinybird", {
         method: "POST",
         headers: {
@@ -55,8 +46,9 @@ export default function StatusForm({ defaultValue }: StatusFormProps) {
 
   return (
     <div className="grid gap-1.5">
+      <Label htmlFor="status">Status</Label>
       <Select name="status" onValueChange={setValue} defaultValue={value}>
-        <SelectTrigger id="status">
+        <SelectTrigger id="status" className="backdrop-blur-[2px]">
           <SelectValue placeholder="Status" />
         </SelectTrigger>
         <SelectContent>

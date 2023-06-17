@@ -16,42 +16,42 @@ export default function TitleForm({ defaultValue }: TitleFormProps) {
   const disabled = value === defaultValue;
 
   const onClick = async () => {
-    await fetch("api/v1/upstash", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: "title",
-        value
-      }),
-    });
-    await fetch("api/v1/tinybird", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        method: "update",
-        name: "title",
-        value
-      }),
-    });
-    router.refresh();
+    if (!disabled) {
+      await fetch("api/v1/tinybird", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          method: "update",
+          name: "title",
+          value,
+        }),
+      });
+      router.refresh();
+    }
   };
 
   return (
     <div className="grid gap-1.5">
       <Label htmlFor="title">Title</Label>
-      <Input
-        id="title"
-        name="title"
-        onChange={(e) => setValue(e.target.value)}
-        defaultValue={value}
-      />
-      <Button variant="outline" onClick={onClick} disabled={disabled}>
-        Submit
-      </Button>
+      <div className="flex gap-1.5">
+        <Input
+          id="title"
+          name="title"
+          onChange={(e) => setValue(e.target.value)}
+          defaultValue={value}
+          className="backdrop-blur-[2px]"
+        />
+        <Button
+          variant="outline"
+          className="backdrop-blur-[2px]"
+          onClick={onClick}
+          // disabled={disabled} avoid disabled state
+        >
+          Submit
+        </Button>
+      </div>
     </div>
   );
 }

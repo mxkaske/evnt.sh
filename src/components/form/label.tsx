@@ -45,48 +45,28 @@ export default function LabelForm({ defaultValues = [] }: LabelFormProps) {
   const handleChange = async () => {
     const added = values.filter((label) => !defaultValues?.includes(label));
     const removed = defaultValues?.filter((label) => !values?.includes(label));
-    await fetch("api/v1/upstash", {
-      method: "PUT",
+    await fetch("api/v1/tinybird", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        method: "update",
         name: "labels",
         value: values,
+        // random stuff
+        metadata: {
+          added,
+          removed,
+        },
       }),
     });
-    if (added.length > 0) {
-      await fetch("api/v1/tinybird", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          method: "create",
-          name: "labels",
-          value: added,
-        }),
-      });
-    }
-    if (removed.length > 0) {
-      await fetch("api/v1/tinybird", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          method: "delete",
-          name: "labels",
-          value: removed,
-        }),
-      });
-    }
     router.refresh();
   };
 
   const onOpenChange = (value: boolean) => {
     // && !disabled
-    if (!value) {
+    if (!value && values.length > 0) {
       handleChange();
     }
     setOpen(value);
@@ -101,7 +81,7 @@ export default function LabelForm({ defaultValues = [] }: LabelFormProps) {
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-full justify-between line-clamp-1"
+            className="w-full justify-between line-clamp-1 backdrop-blur-[2px]"
           >
             <span className="truncate">
               {values.length > 0 ? values.join(", ") : "Select label..."}

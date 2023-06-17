@@ -13,6 +13,8 @@ export const bodySchema = z.object({
     ])
     .optional()
     .nullable(),
+  // can be any additional information
+  metadata: z.record(z.string(), z.any()).optional().nullable(),
 });
 
 export type Method = z.infer<typeof methodEnum>;

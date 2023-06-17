@@ -14,14 +14,24 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
+// all the different keys/id
+const deleteAll = [
+  `tinybird/comments`,
+  `upstash/comments`,
+  `upstash`,
+  `tinybird`,
+];
+
 export default function DeleteButton() {
   const router = useRouter();
 
   const onClick = async () => {
-    await fetch(`/api/v1/upstash`, { method: "DELETE" });
-    await fetch(`/api/v1/tinybird`, { method: "DELETE" });
-    await fetch(`/api/v1/tinybird/comments`, { method: "DELETE" }); // seems not to work
-    await fetch(`/api/v1/upstash/comments`, { method: "DELETE" });
+    await Promise.all(
+      deleteAll.map(async (path) => {
+        await fetch(`/api/v1/${path}`, { method: "DELETE" });
+        return;
+      })
+    );
     router.refresh();
   };
 

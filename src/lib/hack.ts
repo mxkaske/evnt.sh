@@ -8,4 +8,4 @@ export function asyncComponent<T, R>(
   return fn as (arg: T) => R;
 }
 
-// REMINDER: Typescript 5.1. will fix this issue!
+// REMINDER: Typescript 5.1. fixes this issue!

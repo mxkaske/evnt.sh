@@ -37,6 +37,7 @@ export const POST = async (
   //
   const json = await req.json();
   const body = bodySchema.safeParse(json);
+  console.log(body);
   if (!body.success) {
     return new Response("Error", { status: 500 });
   }

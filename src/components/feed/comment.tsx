@@ -1,5 +1,5 @@
 import ActivityIcon from "../activity/activity-icon";
-import { formatDistanceStrict } from "date-fns";
+import { formatDistance } from "date-fns";
 import ActivityUserAvatar from "../activity/activity-user-avatar";
 import ActivityUserName from "../activity/activity-user-name";
 import { USERS } from "@/constants/users";
@@ -23,7 +23,7 @@ export default function Comment({ user_id, value, timestamp }: TinyData) {
               <ActivityUserName user={user} /> commented
             </span>{" "}
             <span className="whitespace-nowrap">
-              {formatDistanceStrict(new Date(timestamp), new Date())} ago
+              {formatDistance(new Date(timestamp), new Date())} ago
             </span>
           </div>
         </div>

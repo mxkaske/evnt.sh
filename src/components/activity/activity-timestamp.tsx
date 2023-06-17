@@ -1,4 +1,4 @@
-import { formatDistanceStrict } from "date-fns";
+import { formatDistance } from "date-fns";
 
 interface ActivityTimestampProps {
   timestamp: number;
@@ -9,7 +9,7 @@ export default function ActivityTimestamp({
 }: ActivityTimestampProps) {
   return (
     <span className="whitespace-nowrap">
-      {formatDistanceStrict(new Date(timestamp), new Date())} ago
+      {formatDistance(new Date(timestamp), new Date())} ago
     </span>
   );
 }

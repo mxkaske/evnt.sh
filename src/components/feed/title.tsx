@@ -1,5 +1,5 @@
 import ActivityIcon from "../activity/activity-icon";
-import { formatDistanceStrict } from "date-fns";
+import { formatDistance } from "date-fns";
 import ActivityUserAvatar from "../activity/activity-user-avatar";
 import ActivityUserName from "../activity/activity-user-name";
 import { TinyData } from "@/lib/tinybird";
@@ -24,7 +24,7 @@ export default function Title({ method, value, user_id, timestamp }: TinyData) {
           </span>{" "}
           <span className="mr-0.5 font-semibold text-foreground">{data}</span>{" "}
           <span className="whitespace-nowrap">
-            {formatDistanceStrict(new Date(timestamp), new Date())} ago
+            {formatDistance(new Date(timestamp), new Date())} ago
           </span>
         </div>
       </div>
