@@ -10,13 +10,13 @@ export const size = {
 
 export const contentType = "image/png";
 
-const interSemiBold = fetch(
-  new URL("../fonts/Inter-SemiBold.ttf", import.meta.url)
-).then((res) => res.arrayBuffer());
+// const interSemiBold = fetch(
+//   new URL("../fonts/Inter-SemiBold.ttf", import.meta.url)
+// ).then((res) => res.arrayBuffer());
 
 // Image generation
 export default async function Image() {
-  const fontSemiBoldData = await interSemiBold;
+  // const fontSemiBoldData = await interSemiBold;
   return new ImageResponse(
     (
       // ImageResponse JSX element
@@ -45,14 +45,14 @@ export default async function Image() {
       // For convenience, we can re-use the exported opengraph-image
       // size config to also set the ImageResponse's width and height.
       ...size,
-      fonts: [
-        {
-          name: "Inter",
-          data: fontSemiBoldData,
-          style: "normal",
-          weight: 400,
-        },
-      ],
+      // fonts: [
+      //   {
+      //     name: "Inter",
+      //     data: fontSemiBoldData,
+      //     style: "normal",
+      //     weight: 400,
+      //   },
+      // ],
     }
   );
 }
