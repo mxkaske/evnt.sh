@@ -40,8 +40,8 @@ export function WaitlistDialog() {
             <DialogDescription>
               Sign up to the waiting list and stay updated.
               <br />
-              <span className="text-muted-foreground text-xs">
-                Your email will be stored without getting a confirmation email.
+              <span className="text-xs italic">
+                Your email will be stored without sending a confirmation email.
               </span>
             </DialogDescription>
           </DialogHeader>

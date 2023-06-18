@@ -14,16 +14,11 @@ export default function Label({
   timestamp,
   metadata,
 }: TinyData) {
-  // probably create array from value
-  const isMultiple = Array.isArray(value) && value.length > 1;
   const meta = metadata ? JSON.parse(`${metadata}`) : {};
   const { added, removed } = meta as { added: string[]; removed: string[] };
   const hasRemoved = removed?.length > 0;
-  const hasAdded = removed?.length > 0;
+  const hasAdded = added?.length > 0;
   const hasBoth = hasAdded && hasRemoved;
-  const text = `${meta?.added?.length > 0 ? "added tag" : "removed tag"}${
-    isMultiple ? "s" : ""
-  }`;
   const user = USERS.find((user) => user.id === Number(user_id)) || USERS[1];
   return (
     <div className="relative flex items-start space-x-3">
@@ -36,23 +31,33 @@ export default function Label({
         </div>
         <div className="text-sm leading-7 text-muted-foreground">
           <span className="mr-0.5">
-            <ActivityUserName user={user} /> {text}
+            <ActivityUserName user={user} />
           </span>{" "}
-          {/* TODO: check if space-x-* is working */}
-          <span className="mr-0.5 space-x-0.5">
-            {added.map((d) => (
-              <Badge key={d} variant="outline">
-                {d}
-              </Badge>
-            ))}{" "}
-          </span>
-          <span className="mr-0.5 space-x-0.5">
-            {removed.map((d) => (
-              <Badge key={d} variant="outline">
-                {d}
-              </Badge>
-            ))}{" "}
-          </span>
+          {hasAdded && (
+            <>
+              added tag{" "}
+              <span className="mx-0.5 space-x-0.5">
+                {added.map((d) => (
+                  <Badge key={d} variant="outline">
+                    {d}
+                  </Badge>
+                ))}{" "}
+              </span>
+            </>
+          )}
+          {hasBoth && ` and `}
+          {hasRemoved && (
+            <>
+              removed tag{" "}
+              <span className="mx-0.5 space-x-0.5">
+                {removed.map((d) => (
+                  <Badge key={d} variant="outline">
+                    {d}
+                  </Badge>
+                ))}{" "}
+              </span>
+            </>
+          )}
           <span className="whitespace-nowrap">
             {formatDistance(new Date(timestamp), new Date())} ago
           </span>

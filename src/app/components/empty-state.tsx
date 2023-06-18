@@ -13,27 +13,21 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function EmptyState() {
+  const pathname = usePathname();
   const [value, setValue] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const disabled = value === "";
+  const disabled = value === "" || loading;
 
   const onClick = async () => {
-    await fetch("api/v1/upstash", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: value,
-        status: "Ready",
-        labels: [],
-      }),
-    });
-    await fetch("api/v1/tinybird", {
+    setLoading(true);
+    const now = Date.now();
+    const appendix = pathname !== "/" ? pathname : `/${now}`;
+    await fetch(`api/v1/tinybird${appendix}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,7 +38,8 @@ export default function EmptyState() {
         value,
       }),
     });
-    router.refresh();
+    setLoading(false);
+    router.push(`${appendix}`);
   };
 
   return (
@@ -83,7 +78,7 @@ export default function EmptyState() {
             </div>
             <DialogFooter>
               <Button type="submit" {...{ onClick, disabled }}>
-                Create
+                {loading ? "Loading" : "Create"}
               </Button>
             </DialogFooter>
           </DialogContent>

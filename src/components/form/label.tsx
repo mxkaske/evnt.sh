@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import * as React from "react";
@@ -29,23 +29,24 @@ export const LABELS = [
   "question",
 ];
 
-interface LabelFormProps {
+interface Props {
   defaultValues?: string[];
 }
 
 // TODO: maybe use fancy multi select instead?
 
-export default function LabelForm({ defaultValues = [] }: LabelFormProps) {
+export default function LabelForm({ defaultValues = [] }: Props) {
+  const pathname = usePathname();
   const [open, setOpen] = React.useState(false);
   const [values, setValues] = React.useState(defaultValues);
   const router = useRouter();
-  //   const disabled =
-  //     JSON.stringify(values.sort()) === JSON.stringify(defaultValues.sort());
+  const disabled =
+    JSON.stringify(values.sort()) === JSON.stringify(defaultValues.sort());
 
   const handleChange = async () => {
     const added = values.filter((label) => !defaultValues?.includes(label));
     const removed = defaultValues?.filter((label) => !values?.includes(label));
-    await fetch("api/v1/tinybird", {
+    await fetch(`api/v1/tinybird${pathname}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -66,7 +67,7 @@ export default function LabelForm({ defaultValues = [] }: LabelFormProps) {
 
   const onOpenChange = (value: boolean) => {
     // && !disabled
-    if (!value && values.length > 0) {
+    if (!value && values.length > 0 && !disabled) {
       handleChange();
     }
     setOpen(value);

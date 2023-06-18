@@ -1,23 +1,24 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { useState } from "react";
 
-interface TitleFormProps {
+interface Props {
   defaultValue?: string;
 }
 
-export default function TitleForm({ defaultValue }: TitleFormProps) {
+export default function TitleForm({ defaultValue }: Props) {
+  const pathname = usePathname();
   const [value, setValue] = useState(defaultValue);
   const router = useRouter();
   const disabled = value === defaultValue;
 
   const onClick = async () => {
     if (!disabled) {
-      await fetch("api/v1/tinybird", {
+      await fetch(`api/v1/tinybird${pathname}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

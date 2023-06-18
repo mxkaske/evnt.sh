@@ -1,18 +1,19 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { useState } from "react";
 
 export default function CommentForm() {
+  const pathname = usePathname();
   const [value, setValue] = useState("");
   const router = useRouter();
   const disabled = value === "";
 
   const onClick = async () => {
     const timestamp = Date.now();
-    await fetch("api/v1/tinybird/comments", {
+    await fetch(`api/v1/tinybird${pathname}/comments`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

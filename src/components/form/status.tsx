@@ -1,7 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { Button } from "../ui/button";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Select,
   SelectContent,
@@ -19,19 +18,21 @@ interface StatusFormProps {
 }
 
 export default function StatusForm({ defaultValue }: StatusFormProps) {
+  const pathname = usePathname();
   const [value, setValue] = useState(defaultValue);
   const disabled = value === defaultValue;
   const router = useRouter();
+  console.log({ defaultValue });
 
   useEffect(() => {
     const handleChange = async () => {
-      await fetch("api/v1/tinybird", {
+      await fetch(`api/v1/tinybird${pathname}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          method: "update",
+          method: defaultValue ? "update" : "create",
           name: "status",
           value,
         }),
@@ -42,14 +43,14 @@ export default function StatusForm({ defaultValue }: StatusFormProps) {
     if (!disabled) {
       handleChange();
     }
-  }, [disabled, router, value]);
+  }, [disabled, router, value, pathname, defaultValue]);
 
   return (
     <div className="grid gap-1.5">
       <Label htmlFor="status">Status</Label>
       <Select name="status" onValueChange={setValue} defaultValue={value}>
         <SelectTrigger id="status" className="backdrop-blur-[2px]">
-          <SelectValue placeholder="Status" />
+          <SelectValue placeholder="Select status" />
         </SelectTrigger>
         <SelectContent>
           {STATUS.map((status) => (

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,25 +13,18 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-
-// all the different keys/id
-const deleteAll = [
-  `tinybird/comments`,
-  `upstash/comments`,
-  `upstash`,
-  `tinybird`,
-];
+import { useState } from "react";
 
 export default function DeleteButton() {
+  const pathname = usePathname();
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const onClick = async () => {
-    await Promise.all(
-      deleteAll.map(async (path) => {
-        await fetch(`/api/v1/${path}`, { method: "DELETE" });
-        return;
-      })
-    );
+    setLoading(true);
+    await fetch(`/api/v1/tinybird${pathname}`, { method: "DELETE" });
+    await fetch(`/api/v1/tinybird${pathname}/comments`, { method: "DELETE" });
+    setLoading(false);
     router.refresh();
   };
 
@@ -52,7 +45,9 @@ export default function DeleteButton() {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={onClick}>Continue</AlertDialogAction>
+          <AlertDialogAction onClick={onClick} disabled={loading}>
+            {loading ? "Loading" : "Continue"}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
