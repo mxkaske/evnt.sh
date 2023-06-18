@@ -44,7 +44,7 @@ export default async function Home({ params }: { params: Params }) {
         <div className="space-x-6">
           <WaitlistDialog />
           <a
-            href="https://twitter.com/mxkaske"
+            href="https://github.com/mxkaske/evnt.sh"
             target="_blank"
             rel="noreferrer"
             className="text-sm rounded-md font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background underline-offset-4 hover:underline text-primary"
