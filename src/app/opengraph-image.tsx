@@ -27,9 +27,11 @@ export default async function Image() {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          // alignItems: "center",
+          alignItems: "center",
           justifyContent: "center",
-          margin: "20px",
+          textAlign: "center",
+          margin: "auto",
+          maxWidth: 900,
         }}
       >
         <div tw="text-7xl mb-6">evnt.sh</div>
