@@ -16,6 +16,7 @@ const interSemiBold = fetch(
 
 // Image generation
 export default async function Image() {
+  const fontSemiBoldData = await interSemiBold;
   return new ImageResponse(
     (
       // ImageResponse JSX element
@@ -47,7 +48,7 @@ export default async function Image() {
       fonts: [
         {
           name: "Inter",
-          data: await interSemiBold,
+          data: fontSemiBoldData,
           style: "normal",
           weight: 400,
         },

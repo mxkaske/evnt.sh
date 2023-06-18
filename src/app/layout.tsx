@@ -7,6 +7,7 @@ import { Metadata } from "next";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  // metadataBase: new URL("https://evnt.sh"),
   title: "evnt.sh",
   description: "Event sourcing made easy.",
 };
