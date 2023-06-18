@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { LoadingAnimation } from "@/components/waitlist/loading-animation";
 import { Plus } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -38,8 +39,8 @@ export default function EmptyState() {
         value,
       }),
     });
-    setLoading(false);
     router.push(`${appendix}`);
+    setLoading(false);
   };
 
   return (
@@ -78,7 +79,7 @@ export default function EmptyState() {
             </div>
             <DialogFooter>
               <Button type="submit" {...{ onClick, disabled }}>
-                {loading ? "Loading" : "Create"}
+                {loading ? <LoadingAnimation /> : "Create"}
               </Button>
             </DialogFooter>
           </DialogContent>

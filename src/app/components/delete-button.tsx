@@ -14,6 +14,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useState } from "react";
+import { LoadingAnimation } from "@/components/waitlist/loading-animation";
 
 export default function DeleteButton() {
   const pathname = usePathname();
@@ -24,8 +25,8 @@ export default function DeleteButton() {
     setLoading(true);
     await fetch(`/api/v0/tinybird${pathname}`, { method: "DELETE" });
     await fetch(`/api/v0/tinybird${pathname}/comments`, { method: "DELETE" });
-    setLoading(false);
     router.refresh();
+    setLoading(false);
   };
 
   return (
@@ -46,7 +47,7 @@ export default function DeleteButton() {
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction onClick={onClick} disabled={loading}>
-            {loading ? "Loading" : "Continue"}
+            {loading ? <LoadingAnimation /> : "Continue"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
