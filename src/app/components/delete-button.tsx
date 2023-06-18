@@ -33,7 +33,7 @@ export default function DeleteButton() {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="destructive" size="sm">
-          Reset
+          {loading ? <LoadingAnimation /> : "Reset"}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
