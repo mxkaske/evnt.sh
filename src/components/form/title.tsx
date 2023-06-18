@@ -18,7 +18,7 @@ export default function TitleForm({ defaultValue }: Props) {
 
   const onClick = async () => {
     if (!disabled) {
-      await fetch(`api/v1/tinybird${pathname}`, {
+      await fetch(`api/v0/tinybird${pathname}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

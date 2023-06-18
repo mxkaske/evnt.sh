@@ -21,7 +21,7 @@ function createAppendix(slug: Params["slug"]) {
 
 export default async function Home({ params }: { params: Params }) {
   const appendix = createAppendix(params.slug);
-  const tinyRes = await fetch(`${BASE_URL}/api/v1/tinybird/${appendix}`);
+  const tinyRes = await fetch(`${BASE_URL}/api/v0/tinybird/${appendix}`);
   const tiny = (await tinyRes.json()) as { data: TinyData[] };
   const isEmpty = tiny.data.length === 0 || params.slug === undefined;
   return (

@@ -22,8 +22,8 @@ export default function DeleteButton() {
 
   const onClick = async () => {
     setLoading(true);
-    await fetch(`/api/v1/tinybird${pathname}`, { method: "DELETE" });
-    await fetch(`/api/v1/tinybird${pathname}/comments`, { method: "DELETE" });
+    await fetch(`/api/v0/tinybird${pathname}`, { method: "DELETE" });
+    await fetch(`/api/v0/tinybird${pathname}/comments`, { method: "DELETE" });
     setLoading(false);
     router.refresh();
   };

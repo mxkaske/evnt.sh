@@ -26,7 +26,7 @@ export default function StatusForm({ defaultValue }: StatusFormProps) {
 
   useEffect(() => {
     const handleChange = async () => {
-      await fetch(`api/v1/tinybird${pathname}`, {
+      await fetch(`api/v0/tinybird${pathname}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

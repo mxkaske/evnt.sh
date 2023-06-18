@@ -7,7 +7,7 @@ import { TinyData } from "@/lib/tinybird";
 import { asyncComponent } from "@/lib/hack";
 
 async function History({ appendix }: { appendix: string }) {
-  const tinyRes = await fetch(`${BASE_URL}/api/v1/tinybird/${appendix}`);
+  const tinyRes = await fetch(`${BASE_URL}/api/v0/tinybird/${appendix}`);
   const tiny = (await tinyRes.json()) as { data: TinyData[] };
   return (
     <div className="flow-root mb-8">

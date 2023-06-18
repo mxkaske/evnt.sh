@@ -46,7 +46,7 @@ export default function LabelForm({ defaultValues = [] }: Props) {
   const handleChange = async () => {
     const added = values.filter((label) => !defaultValues?.includes(label));
     const removed = defaultValues?.filter((label) => !values?.includes(label));
-    await fetch(`api/v1/tinybird${pathname}`, {
+    await fetch(`api/v0/tinybird${pathname}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

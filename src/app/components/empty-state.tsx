@@ -27,7 +27,7 @@ export default function EmptyState() {
     setLoading(true);
     const now = Date.now();
     const appendix = pathname !== "/" ? pathname : `/${now}`;
-    await fetch(`api/v1/tinybird${appendix}`, {
+    await fetch(`api/v0/tinybird${appendix}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

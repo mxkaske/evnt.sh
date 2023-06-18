@@ -11,7 +11,7 @@ export async function submitEmail(data: FormData) {
       member: email,
     });
     // await wait(3000);
-    // await fetch(`https://api.highstorm.app/v1/events/evnt.waitlist`, {
+    // await fetch(`https://api.highstorm.app/v0/events/evnt.waitlist`, {
     //   method: "POST",
     //   headers: {
     //     "Content-Type": "application/json",

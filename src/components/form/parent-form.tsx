@@ -8,7 +8,7 @@ import StatusForm from "./status";
 
 // usePathname is a client-side function
 async function ParentForm({ appendix }: { appendix: string }) {
-  const eventsRes = await fetch(`${BASE_URL}/api/v1/state/${appendix}`);
+  const eventsRes = await fetch(`${BASE_URL}/api/v0/state/${appendix}`);
   // get only a restricted amount of events to build the state;
   const events = (await eventsRes.json()) as { data: TinyData[] } | undefined;
 

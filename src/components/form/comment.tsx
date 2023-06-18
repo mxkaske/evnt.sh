@@ -13,7 +13,7 @@ export default function CommentForm() {
 
   const onClick = async () => {
     const timestamp = Date.now();
-    await fetch(`api/v1/tinybird${pathname}/comments`, {
+    await fetch(`api/v0/tinybird${pathname}/comments`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
