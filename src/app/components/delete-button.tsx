@@ -16,6 +16,14 @@ import {
 import { useState } from "react";
 import { LoadingAnimation } from "@/components/waitlist/loading-animation";
 
+const wait = (milliseconds: number): Promise<void> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, milliseconds);
+  });
+};
+
 export default function DeleteButton() {
   const pathname = usePathname();
   const router = useRouter();
@@ -25,8 +33,8 @@ export default function DeleteButton() {
     setLoading(true);
     await fetch(`/api/v0/tinybird${pathname}`, { method: "DELETE" });
     await fetch(`/api/v0/tinybird${pathname}/comments`, { method: "DELETE" });
+    await wait(1000);
     router.refresh();
-    setLoading(false);
   };
 
   return (

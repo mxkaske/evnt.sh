@@ -40,7 +40,6 @@ export default function EmptyState() {
       }),
     });
     router.push(`${appendix}`);
-    setLoading(false);
   };
 
   return (
